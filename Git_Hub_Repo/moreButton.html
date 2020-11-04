@@ -1,5 +1,6 @@
 <html>
     <head>
+         <!-- size and scaling of text-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
         #more {display: none;}
@@ -8,27 +9,30 @@
     <body>
 
         <h2>More Button</h2>
+            <!--Random Sentences-->
             <p>It was that terrifying feeling you have as you tightly hold the covers over you with the knowledge that there is something hiding under your bed. You want to look, but you don't at the same time. You're frozen with fear and unable to act. That's where she found herself and she didn't know what to do next<span id="initial"></span>
                 
             <br>
             <br>    
-                
+            <!--Using span id so I can set two variables for these in Javascript-->    
             <span id="more">He sat across from her trying to imagine it was the first time. It wasn't. Had it been a hundred? It quite possibly could have been. Two hundred? Probably not. His mind wandered until he caught himself and again tried to imagine it was the first time.</span></p>
+            <!--Clickable Button that calls function for displaying the extra text-->
             <button onclick="displayMore()" id="button">Read more</button>
 
         <script>
-            
+        //Function created to add functionality to the buttons and to either display or not display the text    
         function displayMore() {
           var moreText = document.getElementById("more");
-          var btnText = document.getElementById("button");
-
+          var buttonText = document.getElementById("button");
+          // Displays the original text, hides the second sentence
           if (initial.style.display === "none") {
             initial.style.display = "inline";
-            btnText.innerHTML = "Read more"; 
+            buttonText.innerHTML = "Read more"; 
             moreText.style.display = "none";
           } else {
+            // Displays all of the text and Show Less button appears which will collapse the text
             initial.style.display = "none";
-            btnText.innerHTML = "Read less"; 
+            buttonText.innerHTML = "Read less"; 
             moreText.style.display = "inline";
           }
         }
