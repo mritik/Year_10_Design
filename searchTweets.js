@@ -1,42 +1,80 @@
+//import needle
 const needle = require('needle');
+// import hhtp
+var http = require('http');
+// import url
+var url = require('url');
 
-// The code below sets the bearer token from your environment variables
-// To set environment variables on Mac OS X, run the export command below from the terminal: 
+// The code below sets the bearer token from the environment variables
 // export BEARER_TOKEN='AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh' 
 const token = process.env.BEARER_TOKEN; 
 //const token = “AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh”; 
 
-const endpointURL = "https://api.twitter.com/2/tweets"
+const endpointURL = "https://api.twitter.com/2/tweets/search/recent"
 
-async function getRequest() {
-
+async function searchTweets(qs) {
+    // parameters for getting tweets
     const params = {
-        "ids": "1278747501642657792,1255542774432063488", // Edit Tweet IDs to look up
-        "tweet.fields": "lang,author_id", // Edit optional query parameters here
-        "user.fields": "created_at" // Edit optional query parameters here
+        "query": qs, // Search String
+        "tweet.fields": "created_at,author_id",
+        "max_results": "10"
     }
 
-    const res = await needle('get', endpointURL, params, { headers: {
+    console.log("Searching Twitter using endpointURL=" + endpointURL + ", query="+ params["query"] + ", maxResults=" + params["max_results"]); 
+    const twtrRes = await needle('get', endpointURL, params, { headers: {
         "authorization": `Bearer ${token}`
     }})
 
-    if(res.body) {
-        return res.body;
+    if(twtrRes.body) {
+        return twtrRes.body;
     } else {
         throw new Error ('Unsuccessful request')
     }
 }
 
-(async () => {
-
-    try {
-        // Make request
-        const response = await getRequest();
-        console.log(response)
-
-    } catch(e) {
-        console.log(e);
-        process.exit(-1);
+var server= http.Server(function(req,res) {
+    var queryExpr = 'Joe Biden';
+    var queryObject = url.parse(req.url,true).query;
+    if(null != queryObject && null != queryObject['queryExpr']) {
+        queryExpr = queryObject['queryExpr'];
     }
-    process.exit();
-  })();
+    console.log("queryExpr = " + queryExpr);
+    
+    res.writeHead(200, { 'Content-Type': 'text/html' }); 
+    res.write('<p>Searching Tweets for queryExpr = "' + queryExpr + '"</p>');
+    
+    console.log("Invoking searchTweets for queryExpr = " + queryExpr);
+    
+    (async() => {
+        const twtrRespBody = await searchTweets(queryExpr);
+        console.log("twtrRespBody jsonData = " + twtrRespBody.data);
+        var jsonData = twtrRespBody.data;
+
+        res.write('<table>');
+        res.write('<tr>');
+        res.write('<th>Num</th>');
+        res.write('<th>ID</th>');
+        res.write('<th>Author ID</th>');
+        res.write('<th>CreatedDateTime</th>');
+        res.write('<th>Text</th>');
+        res.write('</tr>');
+        
+        for(var i=0; i< jsonData.length; i++) {
+            res.write('<tr>');
+            res.write('<td>' + (i+1) + '</td>');
+            res.write('<td>' + jsonData[i]['id'] + '</td>');
+            res.write('<td>' + jsonData[i]['author_id'] + '</td>');
+            res.write('<td>' + jsonData[i]['created_at'] + '</td>');
+            res.write('<td>' + jsonData[i]['text'] + '</td>');
+            res.write('</tr>');
+        }
+        
+        res.write('</table>');
+        res.end();
+    })()
+    
+});
+
+
+console.log("Starting SearchTweets Server on port 8080.")                     
+server.listen(8080)
