@@ -33,6 +33,18 @@ async function searchTweets(qs) {
 }
 
 var server= http.Server(function(req,res) {
+    
+    // Set CORS headers
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Request-Method', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+	res.setHeader('Access-Control-Allow-Headers', '*');
+	if ( req.method === 'OPTIONS' ) {
+		res.writeHead(200);
+		res.end();
+		return;
+	}
+    
     var queryExpr = 'Joe Biden';
     var queryObject = url.parse(req.url,true).query;
     if(null != queryObject && null != queryObject['queryExpr']) {
@@ -41,7 +53,7 @@ var server= http.Server(function(req,res) {
     console.log("queryExpr = " + queryExpr);
     
     res.writeHead(200, { 'Content-Type': 'text/html' }); 
-    res.write('<p>Searching Tweets for queryExpr = "' + queryExpr + '"</p>');
+    //res.write('<p>Searching Tweets for queryExpr = "' + queryExpr + '"</p>');
     
     console.log("Invoking searchTweets for queryExpr = " + queryExpr);
     
@@ -50,21 +62,21 @@ var server= http.Server(function(req,res) {
         console.log("twtrRespBody jsonData = " + twtrRespBody.data);
         var jsonData = twtrRespBody.data;
 
-        res.write('<table>');
+        res.write('<table id="searchResultsTable">');
         res.write('<tr>');
-        res.write('<th>Num</th>');
-        res.write('<th>ID</th>');
-        res.write('<th>Author ID</th>');
-        res.write('<th>CreatedDateTime</th>');
-        res.write('<th>Text</th>');
+        //res.write('<th>Num</th>');
+        //res.write('<th>ID</th>');
+        //res.write('<th>Author ID</th>');
+        //res.write('<th>CreatedDateTime</th>');
+        res.write('<th>TweetText</th>');
         res.write('</tr>');
         
         for(var i=0; i< jsonData.length; i++) {
             res.write('<tr>');
-            res.write('<td>' + (i+1) + '</td>');
-            res.write('<td>' + jsonData[i]['id'] + '</td>');
-            res.write('<td>' + jsonData[i]['author_id'] + '</td>');
-            res.write('<td>' + jsonData[i]['created_at'] + '</td>');
+            //res.write('<td>' + (i+1) + '</td>');
+            //res.write('<td>' + jsonData[i]['id'] + '</td>');
+            //res.write('<td>' + jsonData[i]['author_id'] + '</td>');
+            //res.write('<td>' + jsonData[i]['created_at'] + '</td>');
             res.write('<td>' + jsonData[i]['text'] + '</td>');
             res.write('</tr>');
         }
@@ -77,4 +89,4 @@ var server= http.Server(function(req,res) {
 
 
 console.log("Starting SearchTweets Server on port 8080.")                     
-server.listen(8080)
+server.listen(8080, 'localhost')
