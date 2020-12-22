@@ -11,34 +11,34 @@
 
     <body onload="displayInitial(), displayInitial2()">
         
-        <div class="container">
+
+        <section class="searchArea">
             
-    
-        </div> 
+            <div class="searchContainer">
+
+                <input type="text" placeholder="Search Tweets..." defaultValue="Elon Musk" name="search" id="searchText"> 
+                <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
+
+                
+                    <div class="searchCard" id="searchCard">
+
+                    </div>
+                
+            </div>
         
-        <div class="searchContainer">
-            
-            <input type="text" placeholder="Search Tweets..." defaultValue="Elon Musk" name="search" id="searchText"> 
-            <button type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
-            
-            <center>
-                <div class="searchCard" id="searchCard">
-                        
-                </div>
-            </center>
-        </div>
-        
+        </section>
     
 
         
-        <center>
+       
             
-        <h1>Media News</h1>
+    <h1><b>Media News</b></h1>
         
         
     
             
 
+        <section class="infoCards">
             
            <div class="card">
                
@@ -85,24 +85,26 @@
                
             </div>
             
-        </center>
+        </section>
        
         
-      
-        <nav id="nav1">
-           <ul>
-               <li><a class="active" href="index.html">Home</a></li>
-               <li><a href="page1.html">Sports</a></li>
-               <li><a href="page2.html">Criminal</a></li>
-               <li><a href="page3.html">Politics</a></li>
-               <li><a href="page4.html">World News</a></li>
-               <li><a href="page5.html">Innovations</a></li>
-               <li><a href="page6.html">Local</a></li>
+         <section class="navArea">
+             
+            <nav id="nav1">
+               <ul>
+                   <li><a class="active" href="index.html">Home</a></li>
+                   <li><a href="page1.html">Sports</a></li>
+                   <li><a href="page2.html">Criminal</a></li>
+                   <li><a href="page3.html">Politics</a></li>
+                   <li><a href="page4.html">World News</a></li>
+                   <li><a href="page5.html">Innovations</a></li>
+                   <li><a href="page6.html">Local</a></li>
 
 
 
-           </ul>
-        </nav>
+               </ul>
+            </nav>
+        </section>
         
         
         <script>
