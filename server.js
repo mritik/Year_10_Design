@@ -31,6 +31,24 @@ async function searchTweets(qs) {
         throw new Error ('Unsuccessful request')
     }
 }
+async function showTopNews(qs) {
+    const data = null;
+
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+            console.log(this.responseText);
+        }
+    });
+
+    xhr.open("GET", "https://newscatcher.p.rapidapi.com/v1/sources?lang=en");
+    xhr.setRequestHeader("x-rapidapi-key", "a00ad86ca6msh99ceae62c2a30acp19ce0fjsne1b976cab472");
+    xhr.setRequestHeader("x-rapidapi-host", "newscatcher.p.rapidapi.com");
+
+    xhr.send(data);
+    }
 
 var server= http.Server(function(req,res) {
     
@@ -74,6 +92,45 @@ var server= http.Server(function(req,res) {
             const twtrRespBody = await searchTweets(queryExpr);
             console.log("twtrRespBody jsonData = " + twtrRespBody.data);
             var jsonData = twtrRespBody.data;
+
+            res.write('<table id="searchResultsTable">');
+            res.write('<tr>');
+            //res.write('<th>Num</th>');
+            //res.write('<th>ID</th>');
+            //res.write('<th>Author ID</th>');
+            //res.write('<th>CreatedDateTime</th>');
+            res.write('<th>TweetText</th>');
+            res.write('</tr>');
+
+            for(var i=0; i< jsonData.length; i++) {
+                res.write('<tr>');
+                //res.write('<td>' + (i+1) + '</td>');
+                //res.write('<td>' + jsonData[i]['id'] + '</td>');
+                //res.write('<td>' + jsonData[i]['author_id'] + '</td>');
+                //res.write('<td>' + jsonData[i]['created_at'] + '</td>');
+                res.write('<td>' + jsonData[i]['text'] + '</td>');
+                res.write('</tr>');
+
+            }
+
+            res.write('</table>');
+            res.end();
+        })()
+        if('ShowTopNews' == cmd) {
+        if(null != queryObject && null != queryObject['queryExpr']) {
+            queryExpr = queryObject['queryExpr'];
+        }
+        console.log("queryExpr = " + queryExpr);
+
+
+        //res.write('<p>Searching Tweets for queryExpr = "' + queryExpr + '"</p>');
+
+        console.log("Invoking ShowTopNews for queryExpr = " + queryExpr);
+
+        (async() => {
+            const twtrRespBody = await showTopNews(queryExpr);
+            console.log("twtrRespBody jsonData = " + data);
+            var jsonData = data;
 
             res.write('<table id="searchResultsTable">');
             res.write('<tr>');

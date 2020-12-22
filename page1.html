@@ -1,33 +1,49 @@
 <html>
 
     <head>
-         <link rel="stylesheet" href="mystyles.css">
-        
+        <link rel="stylesheet" href="mystyles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="jquery-3.4.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     
 
 
     <body onload="displayInitial()">
         
-        <div class="container">
-            
-        </div>
-        
-        
 
-        <div style="padding:0px;margin-top:0px;"></div>
-        <center>
-        <h1>Media News</h1>
-        </center>
-        
-        <center>
+        <section class="searchArea">
             
-            
+            <div class="searchContainer">
+
+                <input type="text" placeholder="Search Tweets..." defaultValue="Elon Musk" name="search" id="searchText"> 
+                <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
+
+                
+                    <div class="searchCard" id="searchCard">
+
+                    </div>
+                
+            </div>
         
+        </section>
+    
+
+        
+       
+            
+    <h1><b>Media News</b></h1>
+        
+        
+    
+            
+
+        <section class="infoCards">
+            
            <div class="card">
                
               <div class="container">
-                <h4><b>Sports News</b></h4>
+                <h4><b>Top News</b></h4>
                 <p>Headline 1</p>
                 <p>Headline 2</p>
                 <p>Headline 3</p>
@@ -41,40 +57,59 @@
                 <p>Headline 9</p>
                 <p>Headline 10</p>
                 </span>
-                <button onclick="displayMore()" id= "button">More</button>
+                <button onclick="displayMore()" id= "button">Read More</button>
+                
               </div>
                
             </div>
 
-            
-        </center>
-           
+        </section>
+       
+        
+         <section class="navArea">
+             
+            <nav id="nav1">
+                <ul>
+                   <li><a href="index.html">Home</a></li>
+                   <li><a class="active" href="page1.html">Sports</a></li>
+                   <li><a href="page2.html">Criminal</a></li>
+                   <li><a href="page3.html">Politics</a></li>
+                   <li><a href="page4.html">World News</a></li>
+                   <li><a href="page5.html">Innovations</a></li>
+                   <li><a href="page6.html">Local</a></li>
 
-        <nav id="nav1">
-           <ul>
-               <li><a href="index.html">Home</a></li>
-               <li><a class="active" href="page1.html">Sports</a></li>
-               <li><a href="page2.html">Criminal</a></li>
-               <li><a href="page3.html">Politics</a></li>
-               <li><a href="page4.html">World News</a></li>
-               <li><a href="page5.html">Innovations</a></li>
-               <li><a href="page6.html">Local</a></li>
 
 
-
-           </ul>
-        </nav>
+                </ul>
+            </nav>
+        </section>
+        
         
         <script>
+             
+            function invokeSearchTweets(inputText) {
+                var urlPrefix = "http://localhost:8080/?queryExpr="
+                const Http = new XMLHttpRequest();
+                const url = encodeURI(urlPrefix + inputText.value);
+                
+                //alert("URL is : " + url);
+                console.log("Invoking Http Get for URL=" + url);
+                
+                Http.open("GET", url);
+                Http.send();
 
+                Http.onreadystatechange = (e) => {
+                  console.log("HttpResp -->" + Http.responseText)
+                  searchCard.innerHTML = Http.responseText;
+                }
+            }
+            
             function displayInitial() {
               var moreText = document.getElementById("more");
               var buttonText = document.getElementById("button");
               buttonText.innerHTML = "More"; 
               moreText.style.display = "none";
             }
-            
-           
             
             function displayMore() {
               var moreText = document.getElementById("more");
@@ -91,10 +126,15 @@
               }
             }
             
-        
-            
+
         </script>
         
     </body>
 
 </html>
+
+
+
+   
+        
+       
