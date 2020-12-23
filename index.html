@@ -9,7 +9,7 @@
     
 
 
-    <body onload="displayInitial(), displayInitial2(), showTopNews()">
+    <body onload="displayInitial(), displayInitial2(), invokeShowTopNews()">
         
 
         <section class="searchArea">
@@ -40,22 +40,14 @@
 
         <section class="infoCards">
             
-           <div class="card">
+           <div class="infoCard1" id="infoCard1">
                
               <div class="container">
                 <h4><b>Top News</b></h4>
-                <p>Headline 1</p>
-                <p>Headline 2</p>
-                <p>Headline 3</p>
-                <p>Headline 4</p>
-                <p>Headline 5</p>
+               
                 <span id="initial"></span>
                 <span id="more">
-                <p>Headline 6</p>
-                <p>Headline 7</p>
-                <p>Headline 8</p>
-                <p>Headline 9</p>
-                <p>Headline 10</p>
+               
                 </span>
                 <button onclick="displayMore()" id= "button">Read More</button>
                 
@@ -63,7 +55,7 @@
                
             </div>
 
-             <div class="card">
+             <div class="infoCard2" id="infoCard2">
                
               <div class="container">
                 <h4><b>Personalized News</b></h4>
@@ -99,18 +91,31 @@
                    <li><a href="page4.html">World News</a></li>
                    <li><a href="page5.html">Innovations</a></li>
                    <li><a href="page6.html">Local</a></li>
-
-
-
                </ul>
             </nav>
         </section>
         
         
         <script>
+            
+            function invokeShowTopNews() {
+                var url = "http://localhost:8080/ExecCommand?command=ShowTopNews"
+                const Http = new XMLHttpRequest();
+
+                //alert("URL is : " + url);
+                console.log("Invoking Http Get for URL=" + url);
+                
+                Http.open("GET", url);
+                Http.send();
+
+                Http.onreadystatechange = (e) => {
+                  console.log("HttpResp -->" + Http.responseText)
+                  infoCard1.innerHTML = Http.responseText;
+                }
+            }
              
             function invokeSearchTweets(inputText) {
-                var urlPrefix = "http://localhost:8080/?queryExpr="
+                var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
                 const Http = new XMLHttpRequest();
                 const url = encodeURI(urlPrefix + inputText.value);
                 
