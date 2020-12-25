@@ -37,10 +37,10 @@ async function searchTweets(qs) {
     }
 }
 
-async function showTopNews() {
+async function showNews(topic) {
     // parameters for getting news
     const params = {
-        "topic": "news",
+        "topic": topic,
         "lang": "en",
         "media": "True"
     }
@@ -60,55 +60,6 @@ async function showTopNews() {
         return null;
     }
 }
-
-async function showSportsNews() {
-    // parameters for getting news
-    const params = {
-        "topic": "sport",
-        "lang": "en",
-        "media": "True"
-    }
-
-    console.log("Searching News using newsEndpointURL=" + newsEndpointURL + ", topic="+ params["topic"]); 
-    const newsRes = await needle('get', newsEndpointURL, params, { headers: {
-        "x-rapidapi-key": "a00ad86ca6msh99ceae62c2a30acp19ce0fjsne1b976cab472",
-        "x-rapidapi-host": "newscatcher.p.rapidapi.com",
-        "useQueryString": true
-    }})
-
-    if(newsRes.body) {
-        return newsRes.body;
-    } else {
-        // TODO FIXME - Improve Error Logging
-        console.log('Unsuccessful News Request');
-        return null;
-    }
-}
-
-async function ShowPoliticalNews() {
-    // parameters for getting news
-    const params = {
-        "topic": "politics",
-        "lang": "en",
-        "media": "True"
-    }
-
-    console.log("Searching News using newsEndpointURL=" + newsEndpointURL + ", topic="+ params["topic"]); 
-    const newsRes = await needle('get', newsEndpointURL, params, { headers: {
-        "x-rapidapi-key": "a00ad86ca6msh99ceae62c2a30acp19ce0fjsne1b976cab472",
-        "x-rapidapi-host": "newscatcher.p.rapidapi.com",
-        "useQueryString": true
-    }})
-
-    if(newsRes.body) {
-        return newsRes.body;
-    } else {
-        // TODO FIXME - Improve Error Logging
-        console.log('Unsuccessful News Request');
-        return null;
-    }
-}
-
 
 var server= http.Server(function(req, res) {
     
@@ -157,6 +108,7 @@ var server= http.Server(function(req, res) {
                 }  
             });  
             break;  
+
         }
         case indexPg.test(path):        
         case pg1.test(path):  
@@ -182,6 +134,7 @@ var server= http.Server(function(req, res) {
             });  
             break;  
         }
+        
         case execCmd.test(path): {
              res.writeHead(200, { 'Content-Type': 'text/html' }); 
     
@@ -196,6 +149,7 @@ var server= http.Server(function(req, res) {
             } else {
                 console.log("cmd = " + cmd);
             }
+
 
             if('SearchTweets' == cmd) {
                 if(null != queryObject && null != queryObject['queryExpr']) {
@@ -242,7 +196,7 @@ var server= http.Server(function(req, res) {
                    
                     (async() => {
                         
-                        const newsRespBody = await showTopNews("news");
+                        const newsRespBody = await showNews("news");
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
                             var newsData = newsRespBody.articles;
@@ -278,7 +232,7 @@ var server= http.Server(function(req, res) {
                    
                     (async() => {
                         
-                        const newsRespBody = await showSportsNews("sport");
+                        const newsRespBody = await showNews("sport");
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
                             var newsData = newsRespBody.articles;
@@ -314,7 +268,8 @@ var server= http.Server(function(req, res) {
                    
                     (async() => {
                         
-                        const newsRespBody = await showPoliticalNews("politics");
+                        const newsRespBody = await showNews("politics");
+
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
                             var newsData = newsRespBody.articles;
@@ -326,6 +281,7 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
+
                             res.write('<th>Link</th>');
                             res.write('</tr>');
 
@@ -343,8 +299,10 @@ var server= http.Server(function(req, res) {
                         
                         res.end();
                     })()
+
             
-            }else {
+            } else {
+
                     console.log("Unsupported cmd = " + cmd);
                     res.write("Unsupported cmd = " + cmd);
             }
