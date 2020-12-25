@@ -138,7 +138,7 @@ var server= http.Server(function(req, res) {
         case execCmd.test(path): {
              res.writeHead(200, { 'Content-Type': 'text/html' }); 
     
-            // Cmd Values = {'SearchTweets', 'ShowTopNews', 'ShowPersonalNews', 'ShowSportsNews', ''ShowCrimeNews', 'ShowPoliticsNews', 'ShowWorldNews', ShowInnovationNews', 'ShowLocalNews'}
+            // Cmd Values = {'SearchTweets', 'ShowTopNews', 'ShowPersonalNews', 'ShowSportsNews', 'ShowEntertainmentNews', 'ShowPoliticsNews', 'ShowWorldNews', ShowInnovationNews', 'ShowLocalNews'}
 
             var queryExpr = 'Joe Biden';
             var queryObject = url.parse(req.url,true).query;
@@ -208,13 +208,11 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
-                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td>' + newsData[i]['title'] + '</td>');
-                                res.write('<td>' + newsData[i]['link'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
                                 res.write('</tr>');
                             }
 
@@ -240,17 +238,50 @@ var server= http.Server(function(req, res) {
                             console.log("newsData sz = " + newsData.length);
                             
                             res.write('<caption><b>Sports News</b></caption>')
-                            res.write('\n')
+                           res.write('\n')
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
-                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td>' + newsData[i]['title'] + '</td>');
-                                res.write('<td>' + newsData[i]['link'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('</tr>');
+                            }
+                            res.write('</table>');
+                        } else {
+                            res.write('Unable to Fetch News! Check Server Logs for Error.');
+                        }
+                        
+                        res.end();
+                    })()
+            
+            
+             } else if('ShowEntertainmentNews' == cmd) {
+    
+                    console.log("Invoking ShowEntertainmentNews");
+                   
+                    (async() => {
+                        
+                        const newsRespBody = await showNews("entertainment");
+
+                        console.log("newsRespBody = " + newsRespBody);
+                        if(null != newsRespBody) {
+                            var newsData = newsRespBody.articles;
+
+                            console.log("newsData sz = " + newsData.length);
+                            
+                            res.write('<caption><b>Entertainment News</b></caption>')
+                           res.write('\n')
+                            res.write('<table id="newsResultsTable">');
+                            res.write('<tr>');
+                            res.write('<th>Headline</th>');
+                            res.write('</tr>');
+
+                            for(var i=0; i< newsData.length; i++) {
+                                res.write('<tr>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
                                 res.write('</tr>');
                             }
 
@@ -261,8 +292,8 @@ var server= http.Server(function(req, res) {
                         
                         res.end();
                     })()
-            
-             } else if('ShowPoliticalNews' == cmd) {
+                 
+               } else if('ShowPoliticalNews' == cmd) {
     
                     console.log("Invoking ShowPoliticalNews");
                    
@@ -281,14 +312,11 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
-
-                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td>' + newsData[i]['title'] + '</td>');
-                                res.write('<td>' + newsData[i]['link'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
                                 res.write('</tr>');
                             }
 
@@ -299,8 +327,109 @@ var server= http.Server(function(req, res) {
                         
                         res.end();
                     })()
+   
+               } else if('ShowWorldNews' == cmd) {
+    
+                    console.log("Invoking ShowWorldNews");
+                   
+                    (async() => {
+                        
+                        const newsRespBody = await showNews("world");
 
-            
+                        console.log("newsRespBody = " + newsRespBody);
+                        if(null != newsRespBody) {
+                            var newsData = newsRespBody.articles;
+
+                            console.log("newsData sz = " + newsData.length);
+                            
+                            res.write('<caption><b>World News</b></caption>')
+                            res.write('\n')
+                            res.write('<table id="newsResultsTable">');
+                            res.write('<tr>');
+                            res.write('<th>Headline</th>');
+                            res.write('</tr>');
+
+                            for(var i=0; i< newsData.length; i++) {
+                                res.write('<tr>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('</tr>');
+                            }
+                
+                            res.write('</table>');
+                        } else {
+                            res.write('Unable to Fetch News! Check Server Logs for Error.');
+                        }
+                        
+                        res.end();
+                    })()   
+               } else if('ShowScienceNews' == cmd) {
+    
+                    console.log("Invoking ShowScienceNews");
+                   
+                    (async() => {
+                        
+                        const newsRespBody = await showNews("science");
+
+                        console.log("newsRespBody = " + newsRespBody);
+                        if(null != newsRespBody) {
+                            var newsData = newsRespBody.articles;
+
+                            console.log("newsData sz = " + newsData.length);
+                            
+                            res.write('<caption><b>Science News</b></caption>')
+                            res.write('\n')
+                            res.write('<table id="newsResultsTable">');
+                            res.write('<tr>');
+                            res.write('<th>Headline</th>');
+                            res.write('</tr>');
+
+                            for(var i=0; i< newsData.length; i++) {
+                                res.write('<tr>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('</tr>');
+                            }
+
+                            res.write('</table>');
+                        } else {
+                            res.write('Unable to Fetch News! Check Server Logs for Error.');
+                        }
+                        
+                        res.end();
+                    })() 
+               } else if('ShowLocalNews' == cmd) {
+    
+                    console.log("Invoking ShowLocalNews");
+                   
+                    (async() => {
+                        
+                        const newsRespBody = await showNews("country");
+
+                        console.log("newsRespBody = " + newsRespBody);
+                        if(null != newsRespBody) {
+                            var newsData = newsRespBody.articles;
+
+                            console.log("newsData sz = " + newsData.length);
+                            
+                            res.write('<caption><b>Local News</b></caption>')
+                            res.write('\n')
+                            res.write('<table id="newsResultsTable">');
+                            res.write('<tr>');
+                            res.write('<th>Headline</th>');
+                            res.write('</tr>');
+
+                            for(var i=0; i< newsData.length; i++) {
+                                res.write('<tr>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('</tr>');
+                            }
+
+                            res.write('</table>');
+                        } else {
+                            res.write('Unable to Fetch News! Check Server Logs for Error.');
+                        }
+                        
+                        res.end();
+                    })()          
             } else {
 
                     console.log("Unsupported cmd = " + cmd);

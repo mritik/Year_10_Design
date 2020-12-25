@@ -9,7 +9,7 @@
     
 
 
-    <body onload="invokeShowSportsNews()">
+    <body onload="invokeShowEntertainmentNews()">
         
 
         <section class="searchArea">
@@ -31,26 +31,26 @@
 
         
        
-            
-    <h1><b>Media News</b></h1>
-        
-        
-    
-            
+        <center>   
+            <h1><b>Media News</b></h1>
 
-        <section class="infoCards">
-            
-           <div class="infoCard1" id="infoCard1">
-               
-              <div class="container">
-                <h4><b>Sports News</b></h4>
-               
-                
-              </div>
-               
-            </div>
 
-        </section>
+
+
+                <section class="infoCards">
+
+                   <div class="infoCard1" id="infoCard1">
+
+                      <div class="container">
+                        <h4><b>Entertainment News</b></h4>
+
+
+                      </div>
+
+                    </div>
+
+                </section>
+        </center>
        
         
          <section class="navArea">
@@ -59,10 +59,10 @@
                <ul>
                    <li><a href="index.html">Home</a></li>
                    <li><a href="page1.html">Sports</a></li>
-                   <li><a class="active" href="page2.html">Criminal</a></li>
+                   <li><a class="active" href="page2.html">Entertainment</a></li>
                    <li><a href="page3.html">Politics</a></li>
                    <li><a href="page4.html">World News</a></li>
-                   <li><a href="page5.html">Innovations</a></li>
+                   <li><a href="page5.html">Science</a></li>
                    <li><a href="page6.html">Local</a></li>
                </ul>
             </nav>
@@ -70,22 +70,6 @@
         
         
         <script>
-            
-            function invokeShowTopNews() {
-                var url = "http://localhost:8080/ExecCommand?command=ShowTopNews"
-                const Http = new XMLHttpRequest();
-
-                //alert("URL is : " + url);
-                console.log("Invoking Http Get for URL=" + url);
-                
-                Http.open("GET", url);
-                Http.send();
-
-                Http.onreadystatechange = (e) => {
-                  console.log("HttpResp -->" + Http.responseText)
-                  infoCard1.innerHTML = Http.responseText;
-                }
-            }
              
             function invokeSearchTweets(inputText) {
                 var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
@@ -104,8 +88,8 @@
                 }
             }
             
-            function invokeShowSportsNews() {
-                var url = "http://localhost:8080/ExecCommand?command=ShowSportsNews"
+            function invokeShowEntertainmentNews() {
+                var url = "http://localhost:8080/ExecCommand?command=ShowEntertainmentNews"
                 const Http = new XMLHttpRequest();
 
                 //alert("URL is : " + url);

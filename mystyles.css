@@ -10,7 +10,7 @@ h1{
     font-family: "Times New Roman", serif;
     color: black;
     margin-top: 20px;
-    margin-left: 540px;
+
         
 }
 
@@ -71,7 +71,6 @@ h1{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   width: 100%;
   margin-bottom: 20px;
-  margin-left: 500px;
   background-color: #8e9492;
   text-align: center;
   padding: 5px;
@@ -84,7 +83,6 @@ h1{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   width: 100%;
   margin-bottom: 20px;
-  margin-left: 500px;
   background-color: #8e9492;
   text-align: center;
   padding: 5px;
@@ -185,7 +183,7 @@ table {
 }
 
 td, th {
-  border: 1px solid #dddddd;
+  border: 2px solid #252625;
   text-align: left;
   padding: 8px;
 }
