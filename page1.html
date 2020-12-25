@@ -9,14 +9,14 @@
     
 
 
-    <body onload="displayInitial()">
+    <body onload="invokeShowSportsNews()">
         
 
         <section class="searchArea">
             
             <div class="searchContainer">
 
-                <input type="text" placeholder="Search Tweets..." defaultValue="Elon Musk" name="search" id="searchText"> 
+                <input type="text" placeholder="Search Tweets..." name="search" id="searchText"> 
                 <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
 
                 
@@ -40,24 +40,11 @@
 
         <section class="infoCards">
             
-           <div class="card">
+           <div class="infoCard1" id="infoCard1">
                
               <div class="container">
-                <h4><b>Top News</b></h4>
-                <p>Headline 1</p>
-                <p>Headline 2</p>
-                <p>Headline 3</p>
-                <p>Headline 4</p>
-                <p>Headline 5</p>
-                <span id="initial"></span>
-                <span id="more">
-                <p>Headline 6</p>
-                <p>Headline 7</p>
-                <p>Headline 8</p>
-                <p>Headline 9</p>
-                <p>Headline 10</p>
-                </span>
-                <button onclick="displayMore()" id= "button">Read More</button>
+                <h4><b>Sports News</b></h4>
+               
                 
               </div>
                
@@ -69,7 +56,7 @@
          <section class="navArea">
              
             <nav id="nav1">
-                <ul>
+               <ul>
                    <li><a href="index.html">Home</a></li>
                    <li><a class="active" href="page1.html">Sports</a></li>
                    <li><a href="page2.html">Criminal</a></li>
@@ -77,18 +64,31 @@
                    <li><a href="page4.html">World News</a></li>
                    <li><a href="page5.html">Innovations</a></li>
                    <li><a href="page6.html">Local</a></li>
-
-
-
-                </ul>
+               </ul>
             </nav>
         </section>
         
         
         <script>
+            
+            function invokeShowTopNews() {
+                var url = "http://localhost:8080/ExecCommand?command=ShowTopNews"
+                const Http = new XMLHttpRequest();
+
+                //alert("URL is : " + url);
+                console.log("Invoking Http Get for URL=" + url);
+                
+                Http.open("GET", url);
+                Http.send();
+
+                Http.onreadystatechange = (e) => {
+                  console.log("HttpResp -->" + Http.responseText)
+                  infoCard1.innerHTML = Http.responseText;
+                }
+            }
              
             function invokeSearchTweets(inputText) {
-                var urlPrefix = "http://localhost:8080/?queryExpr="
+                var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
                 const Http = new XMLHttpRequest();
                 const url = encodeURI(urlPrefix + inputText.value);
                 
@@ -104,11 +104,34 @@
                 }
             }
             
+            function invokeShowSportsNews() {
+                var url = "http://localhost:8080/ExecCommand?command=ShowSportsNews"
+                const Http = new XMLHttpRequest();
+
+                //alert("URL is : " + url);
+                console.log("Invoking Http Get for URL=" + url);
+                
+                Http.open("GET", url);
+                Http.send();
+
+                Http.onreadystatechange = (e) => {
+                  console.log("HttpResp -->" + Http.responseText)
+                  infoCard1.innerHTML = Http.responseText;
+                }
+            }
+            
             function displayInitial() {
               var moreText = document.getElementById("more");
               var buttonText = document.getElementById("button");
               buttonText.innerHTML = "More"; 
               moreText.style.display = "none";
+            }
+            
+            function displayInitial2() {
+              var moreText2 = document.getElementById("more2");
+              var buttonText2 = document.getElementById("button2");
+              buttonText2.innerHTML = "More"; 
+              moreText2.style.display = "none";
             }
             
             function displayMore() {
@@ -126,15 +149,23 @@
               }
             }
             
+            function displayMore2() {
+              var moreText2 = document.getElementById("more2");
+              var buttonText2 = document.getElementById("button2");
 
+              if (initial2.style.display === "none") {
+                initial2.style.display = "inline";
+                buttonText2.innerHTML = "More"; 
+                moreText2.style.display = "none";
+              } else {
+                initial2.style.display = "none";
+                buttonText2.innerHTML = "Less"; 
+                moreText2.style.display = "inline";
+              }
+            }
         </script>
         
     </body>
 
 </html>
 
-
-
-   
-        
-       

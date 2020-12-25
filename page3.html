@@ -1,68 +1,110 @@
 <html>
 
     <head>
-         <link rel="stylesheet" href="mystyles.css">
-        
+        <link rel="stylesheet" href="mystyles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="jquery-3.4.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     
 
 
-    <body onload="displayInitial()">
+    <body onload="invokeShowPoliticalNews()">
         
-        <div class="container" onclick="myFunction(this)">
-            
-        </div>
 
-        <div style="padding:0px;margin-top:0px;"></div>
-        <center>
-        <h1>Media News</h1>
-        </center>
-        
-        <center>
+        <section class="searchArea">
             
-           <div class="card">
+            <div class="searchContainer">
+
+                <input type="text" placeholder="Search Tweets..." name="search" id="searchText"> 
+                <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
+
+                
+                    <div class="searchCard" id="searchCard">
+
+                    </div>
+                
+            </div>
+        
+        </section>
+    
+
+        
+       
+            
+    <h1><b>Media News</b></h1>
+        
+        
+    
+            
+
+        <section class="infoCards">
+            
+           <div class="infoCard1" id="infoCard1">
                
               <div class="container">
                 <h4><b>Political News</b></h4>
-                <p>Headline 1</p>
-                <p>Headline 2</p>
-                <p>Headline 3</p>
-                <p>Headline 4</p>
-                <p>Headline 5</p>
-                <span id="initial"></span>
-                <span id="more">
-                <p>Headline 6</p>
-                <p>Headline 7</p>
-                <p>Headline 8</p>
-                <p>Headline 9</p>
-                <p>Headline 10</p>
-                </span>
-                <button onclick="displayMore()" id= "button">More</button>
+               
+                
               </div>
                
             </div>
 
-            
-        </center>
-         
-
-        <nav id="nav1">
-           <ul>
-               <li><a href="index.html">Home</a></li>
-               <li><a href="page1.html">Sports</a></li>
-               <li><a href="page2.html">Criminal</a></li>
-               <li><a class = "active" href="page3.html">Politics</a></li>
-               <li><a href="page4.html">World News</a></li>
-               <li><a href="page5.html">Innovations</a></li>
-               <li><a href="page6.html">Local</a></li>
-
-
-
-           </ul>
-        </nav>
+        </section>
+       
+        
+         <section class="navArea">
+             
+            <nav id="nav1">
+               <ul>
+                   <li><a href="index.html">Home</a></li>
+                   <li><a href="page1.html">Sports</a></li>
+                   <li><a href="page2.html">Criminal</a></li>
+                   <li><a class="active" href="page3.html">Politics</a></li>
+                   <li><a href="page4.html">World News</a></li>
+                   <li><a href="page5.html">Innovations</a></li>
+                   <li><a href="page6.html">Local</a></li>
+               </ul>
+            </nav>
+        </section>
+        
         
         <script>
+            
+          
+            function invokeSearchTweets(inputText) {
+                var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
+                const Http = new XMLHttpRequest();
+                const url = encodeURI(urlPrefix + inputText.value);
+                
+                //alert("URL is : " + url);
+                console.log("Invoking Http Get for URL=" + url);
+                
+                Http.open("GET", url);
+                Http.send();
 
+                Http.onreadystatechange = (e) => {
+                  console.log("HttpResp -->" + Http.responseText)
+                  searchCard.innerHTML = Http.responseText;
+                }
+            }
+            
+            function invokeShowPoliticalNews() {
+                var url = "http://localhost:8080/ExecCommand?command=ShowPoliticalNews"
+                const Http = new XMLHttpRequest();
+
+                //alert("URL is : " + url);
+                console.log("Invoking Http Get for URL=" + url);
+                
+                Http.open("GET", url);
+                Http.send();
+
+                Http.onreadystatechange = (e) => {
+                  console.log("HttpResp -->" + Http.responseText)
+                  infoCard1.innerHTML = Http.responseText;
+                }
+            }
+            
             function displayInitial() {
               var moreText = document.getElementById("more");
               var buttonText = document.getElementById("button");
@@ -70,7 +112,12 @@
               moreText.style.display = "none";
             }
             
-           
+            function displayInitial2() {
+              var moreText2 = document.getElementById("more2");
+              var buttonText2 = document.getElementById("button2");
+              buttonText2.innerHTML = "More"; 
+              moreText2.style.display = "none";
+            }
             
             function displayMore() {
               var moreText = document.getElementById("more");
@@ -87,10 +134,23 @@
               }
             }
             
-        
-            
+            function displayMore2() {
+              var moreText2 = document.getElementById("more2");
+              var buttonText2 = document.getElementById("button2");
+
+              if (initial2.style.display === "none") {
+                initial2.style.display = "inline";
+                buttonText2.innerHTML = "More"; 
+                moreText2.style.display = "none";
+              } else {
+                initial2.style.display = "none";
+                buttonText2.innerHTML = "Less"; 
+                moreText2.style.display = "inline";
+              }
+            }
         </script>
         
     </body>
 
 </html>
+
