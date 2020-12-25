@@ -174,6 +174,7 @@ var server= http.Server(function(req, res) {
                     //res.write('<th>Author ID</th>');
                     //res.write('<th>CreatedDateTime</th>');
                     res.write('<th>TweetText</th>');
+                    res.write('<th>ShowTweet</th>');
                     res.write('</tr>');
 
                     for(var i=0; i< tweetData.length; i++) {
@@ -183,8 +184,10 @@ var server= http.Server(function(req, res) {
                         //res.write('<td>' + tweetData[i]['author_id'] + '</td>');
                         //res.write('<td>' + tweetData[i]['created_at'] + '</td>');
                         res.write('<td>' + tweetData[i]['text'] + '</td>');
+                        // https://twitter.com/i/web/status/{tweetid}
+                        var tweetUrl = "https://twitter.com/i/web/status/" + tweetData[i]['id'];
+                        res.write('<td><a href="' + tweetUrl + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
                         res.write('</tr>');
-
                     }
 
                     res.write('</table>');
@@ -208,11 +211,13 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
+                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('<td>' + newsData[i]['title'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
                                 res.write('</tr>');
                             }
 
@@ -242,11 +247,13 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
+                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('<td>' + newsData[i]['title'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
                                 res.write('</tr>');
                             }
                             res.write('</table>');
@@ -277,11 +284,13 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
+                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('<td>' + newsData[i]['title'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
                                 res.write('</tr>');
                             }
 
@@ -312,11 +321,13 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
+                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('<td>' + newsData[i]['title'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
                                 res.write('</tr>');
                             }
 
@@ -347,11 +358,13 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
+                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('<td>' + newsData[i]['title'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
                                 res.write('</tr>');
                             }
                 
@@ -381,11 +394,13 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
+                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('<td>' + newsData[i]['title'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
                                 res.write('</tr>');
                             }
 
@@ -415,11 +430,13 @@ var server= http.Server(function(req, res) {
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
+                            res.write('<th>Link</th>');
                             res.write('</tr>');
 
                             for(var i=0; i< newsData.length; i++) {
                                 res.write('<tr>');
-                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + newsData[i]['title'] + '</a></td>');
+                                res.write('<td>' + newsData[i]['title'] + '</td>');
+                                res.write('<td><a href="' + newsData[i]['link'] + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
                                 res.write('</tr>');
                             }
 
