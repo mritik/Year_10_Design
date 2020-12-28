@@ -31,7 +31,6 @@ async function searchTweets(qs) {
     if(twtrRes.body) {
         return twtrRes.body;
     } else {
-        // TODO FIXME - Improve Error Logging
         console.log('Unsuccessful Twitter Request');
         return null;
     }
@@ -55,15 +54,37 @@ async function showNews(topic) {
     if(newsRes.body) {
         return newsRes.body;
     } else {
-        // TODO FIXME - Improve Error Logging
-        console.log('Unsuccessful News Request');
+        console.log('Unsuccessful Get News Request');
+        return null;
+    }
+}
+
+async function showLocalNews(country) {
+    // parameters for getting news
+    const params = {
+        "country": country,
+        "lang": "en",
+        "media": "True"
+    }
+
+    console.log("Searching News using newsEndpointURL=" + newsEndpointURL + ", country="+ params["country"]); 
+    const newsRes = await needle('get', newsEndpointURL, params, { headers: {
+        "x-rapidapi-key": "a00ad86ca6msh99ceae62c2a30acp19ce0fjsne1b976cab472",
+        "x-rapidapi-host": "newscatcher.p.rapidapi.com",
+        "useQueryString": true
+    }})
+
+    if(newsRes.body) {
+        return newsRes.body;
+    } else {
+        console.log('Unsuccessful Get Local News Request');
         return null;
     }
 }
 
 var server= http.Server(function(req, res) {
     
-     // Set CORS headers
+     // Set CORS headers in order to not run into a CORS Error
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Request-Method', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
@@ -140,7 +161,6 @@ var server= http.Server(function(req, res) {
     
             // Cmd Values = {'SearchTweets', 'ShowTopNews', 'ShowPersonalNews', 'ShowSportsNews', 'ShowEntertainmentNews', 'ShowPoliticsNews', 'ShowWorldNews', ShowInnovationNews', 'ShowLocalNews'}
 
-            var queryExpr = 'Joe Biden';
             var queryObject = url.parse(req.url,true).query;
             var cmd = queryObject['command'];
             if(null == cmd || cmd.trim().length <=0) {
@@ -152,13 +172,10 @@ var server= http.Server(function(req, res) {
 
 
             if('SearchTweets' == cmd) {
+                var queryExpr = '';
                 if(null != queryObject && null != queryObject['queryExpr']) {
-                    queryExpr = queryObject['queryExpr'];
+                    queryExpr = queryObject['queryExpr'].trim();
                 }
-                console.log("queryExpr = " + queryExpr);
-
-
-                //res.write('<p>Searching Tweets for queryExpr = "' + queryExpr + '"</p>');
 
                 console.log("Invoking searchTweets for queryExpr = " + queryExpr);
 
@@ -412,20 +429,25 @@ var server= http.Server(function(req, res) {
                         res.end();
                     })() 
                } else if('ShowLocalNews' == cmd) {
+                    var queryCountry = 'Canada';
+                    if(null != queryObject && null != queryObject['queryCountry'] && queryObject['queryCountry'].trim().length > 0) {
+                        queryCountry = queryObject['queryCountry'].trim();
+                    } else {
+                        console.log("Defaulting  queryCountry = " + queryCountry);
+                    }
     
-                    console.log("Invoking ShowLocalNews");
+                    console.log("Invoking ShowLocalNews with queryCountry = " + queryCountry);
                    
                     (async() => {
                         
-                        const newsRespBody = await showNews("country");
+                        const newsRespBody = await showLocalNews(queryCountry);
 
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
                             var newsData = newsRespBody.articles;
-
+                            console.log("newsData = " + newsData);
                             console.log("newsData sz = " + newsData.length);
                             
-                            res.write('<caption><b>Local News</b></caption>')
                             res.write('\n')
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');

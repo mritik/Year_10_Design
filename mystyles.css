@@ -11,6 +11,9 @@ h1{
     color: black;
     margin-top: 20px;
 
+
+
+
         
 }
 
@@ -57,10 +60,18 @@ h1{
     position: relative;
    
 }
+
+.countryContainer{
+    float: left;
+    margin-top: 5px;
+    padding: 0px;
+    position: relative;
+   
+}
 .input[type=text] {
         float: right;
         margin-right: 10px;
-        border: none;
+        border: 1px solid #ccc;  
         font-size: 15px;
           
 }
@@ -76,9 +87,22 @@ h1{
   padding: 5px;
   position: relative;
   overflow: scroll;
+  border-radius: 10px;
 }
 
 .infoCard2 {
+
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: #8e9492;
+  text-align: center;
+  padding: 5px;
+  position: relative;
+  overflow: scroll;
+}
+
+.dataCard {
 
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   width: 100%;
@@ -99,7 +123,7 @@ section.infoCards{
 }
 
 section.searchArea{
-    width: 30%;
+    width: 25%;
     display: inline-table; 
     margin: 10px;
     float: right;
@@ -123,6 +147,7 @@ section.navArea{
     padding: 10px;
     position: relative;
     overflow: scroll;
+    background-color: #8e9492;
 }
 
 

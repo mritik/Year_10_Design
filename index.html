@@ -9,14 +9,14 @@
     
 
 
-    <body onload="displayInitial(), displayInitial2(), invokeShowTopNews()">
+    <body onload="invokeShowTopNews(), Hide()">
         
 
         <section class="searchArea">
             
             <div class="searchContainer">
 
-                <input type="text" placeholder="Search Tweets..." defaultValue="Elon Musk" name="search" id="searchText"> 
+                <input type="text" placeholder="Search Tweets..." name="search" id="searchText"> 
                 <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
 
                 
@@ -32,17 +32,13 @@
         
        
     <center>    
-        <h1><b>Media News</b></h1>
-
-
-
-
 
             <section class="infoCards">
+                <h1><b>Media News</b></h1>
 
-               <div class="infoCard1" id="infoCard1">
+                <div class="infoCard1" id="infoCard1">
 
-                  <div class="container">
+                    <!--<div class="container">
                     <h4><b>Top News</b></h4>
 
                     <span id="initial"></span>
@@ -51,29 +47,7 @@
                     </span>
                     <button onclick="displayMore()" id= "button">Read More</button>
 
-                  </div>
-
-                </div>
-
-                 <div class="infoCard2" id="infoCard2">
-
-                  <div class="container">
-                    <h4><b>Personalized News</b></h4>
-                    <p>Headline 1</p>
-                    <p>Headline 2</p>
-                    <p>Headline 3</p>
-                    <p>Headline 4</p>
-                    <p>Headline 5</p>
-                    <span id="initial2"></span>
-                    <span id="more2">
-                    <p>Headline 6</p>
-                    <p>Headline 7</p>
-                    <p>Headline 8</p>
-                    <p>Headline 9</p>
-                    <p>Headline 10</p>
-                    </span>
-                    <button onclick= "displayMore2()" id= "button2">Read More</button>
-                  </div>
+                    </div>-->
 
                 </div>
 
@@ -82,24 +56,40 @@
         </center> 
        
         
-         <section class="navArea">
+        <section class="navArea">
              
             <nav id="nav1">
-               <ul>
-                   <li><a class="active" href="index.html">Home</a></li>
-                   <li><a href="page1.html">Sports</a></li>
-                   <li><a href="page2.html">Entertainment</a></li>
-                   <li><a href="page3.html">Politics</a></li>
-                   <li><a href="page4.html">World News</a></li>
-                   <li><a href="page5.html">Science</a></li>
-                   <li><a href="page6.html">Local</a></li>
+                <ul>
+                    <li><a class="active" href="index.html">Home</a></li>
+                    <li><a href="page1.html">Sports</a></li>
+                    <li><a href="page2.html">Entertainment</a></li>
+                    <li><a href="page3.html">Politics</a></li>
+                    <li><a href="page4.html">World News</a></li>
+                    <li><a href="page5.html">Science</a></li>
+                    <li><a href="page6.html">Country</a></li>
                </ul>
             </nav>
+            
         </section>
         
         
         <script>
             
+            
+            function Show() {
+                var x = document.getElementById("searchCard");
+                if (x.style.display === "none") {
+                x.style.display = "block";
+             
+            }
+        }
+                
+            function Hide() {
+                var x = document.getElementById("searchCard");
+                x.style.display = "none";
+             
+        }
+        
             function invokeShowTopNews() {
                 var url = "http://localhost:8080/ExecCommand?command=ShowTopNews"
                 const Http = new XMLHttpRequest();
@@ -128,23 +118,17 @@
                 Http.send();
 
                 Http.onreadystatechange = (e) => {
-                  console.log("HttpResp -->" + Http.responseText)
-                  searchCard.innerHTML = Http.responseText;
+                    console.log("HttpResp -->" + Http.responseText)
+                    searchCard.innerHTML = Http.responseText;
+                    Show()
                 }
             }
             
-            function displayInitial() {
+            /*function displayInitial() {
               var moreText = document.getElementById("more");
               var buttonText = document.getElementById("button");
               buttonText.innerHTML = "More"; 
               moreText.style.display = "none";
-            }
-            
-            function displayInitial2() {
-              var moreText2 = document.getElementById("more2");
-              var buttonText2 = document.getElementById("button2");
-              buttonText2.innerHTML = "More"; 
-              moreText2.style.display = "none";
             }
             
             function displayMore() {
@@ -160,22 +144,9 @@
                 buttonText.innerHTML = "Less"; 
                 moreText.style.display = "inline";
               }
-            }
+            } */
             
-            function displayMore2() {
-              var moreText2 = document.getElementById("more2");
-              var buttonText2 = document.getElementById("button2");
 
-              if (initial2.style.display === "none") {
-                initial2.style.display = "inline";
-                buttonText2.innerHTML = "More"; 
-                moreText2.style.display = "none";
-              } else {
-                initial2.style.display = "none";
-                buttonText2.innerHTML = "Less"; 
-                moreText2.style.display = "inline";
-              }
-            }
         </script>
         
     </body>

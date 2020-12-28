@@ -9,7 +9,7 @@
     
 
 
-    <body onload="invokeShowEntertainmentNews()">
+    <body onload="invokeShowEntertainmentNews(), Hide()">
         
 
         <section class="searchArea">
@@ -20,9 +20,9 @@
                 <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
 
                 
-                    <div class="searchCard" id="searchCard">
+                <div class="searchCard" id="searchCard">
 
-                    </div>
+                </div>
                 
             </div>
         
@@ -31,45 +31,80 @@
 
         
        
-        <center>   
-            <h1><b>Media News</b></h1>
+        <center>    
 
+            <section class="infoCards">
+                <h1><b>Media News</b></h1>
 
+                <div class="infoCard1" id="infoCard1">
 
+                    <!--<div class="container">
+                    <h4><b>Top News</b></h4>
 
-                <section class="infoCards">
+                    <span id="initial"></span>
+                    <span id="more">
 
-                   <div class="infoCard1" id="infoCard1">
+                    </span>
+                    <button onclick="displayMore()" id= "button">Read More</button>
 
-                      <div class="container">
-                        <h4><b>Entertainment News</b></h4>
+                    </div>-->
 
+                </div>
 
-                      </div>
-
-                    </div>
-
-                </section>
-        </center>
+            </section>
+        
+        </center> 
        
         
-         <section class="navArea">
+        <section class="navArea">
              
             <nav id="nav1">
-               <ul>
-                   <li><a href="index.html">Home</a></li>
-                   <li><a href="page1.html">Sports</a></li>
-                   <li><a class="active" href="page2.html">Entertainment</a></li>
-                   <li><a href="page3.html">Politics</a></li>
-                   <li><a href="page4.html">World News</a></li>
-                   <li><a href="page5.html">Science</a></li>
-                   <li><a href="page6.html">Local</a></li>
-               </ul>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="page1.html">Sports</a></li>
+                    <li><a class="active" href="page2.html">Entertainment</a></li>
+                    <li><a href="page3.html">Politics</a></li>
+                    <li><a href="page4.html">World News</a></li>
+                    <li><a href="page5.html">Science</a></li>
+                    <li><a href="page6.html">Country</a></li>
+                </ul>
             </nav>
+            
         </section>
         
         
         <script>
+            
+            
+            function Show() {
+                var x = document.getElementById("searchCard");
+                if (x.style.display === "none") {
+                x.style.display = "block";
+             
+            }
+        }
+                
+            function Hide() {
+                var x = document.getElementById("searchCard");
+                x.style.display = "none";
+             
+        }
+        
+            function invokeShowEntertainmentNews() {
+                var url = "http://localhost:8080/ExecCommand?command=ShowEntertainmentNews"
+                const Http = new XMLHttpRequest();
+
+                //alert("URL is : " + url);
+                console.log("Invoking Http Get for URL=" + url);
+                
+                Http.open("GET", url);
+                Http.send();
+
+                Http.onreadystatechange = (e) => {
+                    console.log("HttpResp -->" + Http.responseText)
+                    infoCard1.innerHTML = Http.responseText;
+                }
+            }
              
             function invokeSearchTweets(inputText) {
                 var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
@@ -83,39 +118,17 @@
                 Http.send();
 
                 Http.onreadystatechange = (e) => {
-                  console.log("HttpResp -->" + Http.responseText)
-                  searchCard.innerHTML = Http.responseText;
+                    console.log("HttpResp -->" + Http.responseText)
+                    searchCard.innerHTML = Http.responseText;
+                    Show()
                 }
             }
             
-            function invokeShowEntertainmentNews() {
-                var url = "http://localhost:8080/ExecCommand?command=ShowEntertainmentNews"
-                const Http = new XMLHttpRequest();
-
-                //alert("URL is : " + url);
-                console.log("Invoking Http Get for URL=" + url);
-                
-                Http.open("GET", url);
-                Http.send();
-
-                Http.onreadystatechange = (e) => {
-                  console.log("HttpResp -->" + Http.responseText)
-                  infoCard1.innerHTML = Http.responseText;
-                }
-            }
-            
-            function displayInitial() {
+            /*function displayInitial() {
               var moreText = document.getElementById("more");
               var buttonText = document.getElementById("button");
               buttonText.innerHTML = "More"; 
               moreText.style.display = "none";
-            }
-            
-            function displayInitial2() {
-              var moreText2 = document.getElementById("more2");
-              var buttonText2 = document.getElementById("button2");
-              buttonText2.innerHTML = "More"; 
-              moreText2.style.display = "none";
             }
             
             function displayMore() {
@@ -131,22 +144,9 @@
                 buttonText.innerHTML = "Less"; 
                 moreText.style.display = "inline";
               }
-            }
+            } */
             
-            function displayMore2() {
-              var moreText2 = document.getElementById("more2");
-              var buttonText2 = document.getElementById("button2");
 
-              if (initial2.style.display === "none") {
-                initial2.style.display = "inline";
-                buttonText2.innerHTML = "More"; 
-                moreText2.style.display = "none";
-              } else {
-                initial2.style.display = "none";
-                buttonText2.innerHTML = "Less"; 
-                moreText2.style.display = "inline";
-              }
-            }
         </script>
         
     </body>

@@ -9,68 +9,72 @@
     
 
 
-    <body onload="invokeShowLocalNews()">
-        
-
-        <section class="searchArea">
+    <body onload="Hide()">
             
-            <div class="searchContainer">
 
-                <input type="text" placeholder="Search Tweets..." name="search" id="searchText"> 
-                <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
-
-                
-                    <div class="searchCard" id="searchCard">
-
-                    </div>
-                
-            </div>
-        
-        </section>
-    
-
-        
-       
-    <center>    
-        <h1><b>Media News</b></h1>
-
-
-
-
+        <center>    
 
             <section class="infoCards">
+                <h1><b>Media News</b></h1>
 
-               <div class="infoCard1" id="infoCard1">
+                <div class="infoCard1" id="infoCard1">
 
-                  <div class="container">
+
                     <h4><b>Local News</b></h4>
 
+                    <div class="countryContainer">
 
-                  </div>
+                        <input type="text" placeholder="Enter ISO Country Code..." name="search" id="searchText"> 
+                        <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeShowLocalNews(searchText)"><i class = "fa fa-search"></i></button>  
+                        <a href= "https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
+
+
+                    </div>
+
+                </div>
+
+                <div class="dataCard" id="dataCard">
 
                 </div>
 
             </section>
-       </center>  
+
+        </center>  
         
-         <section class="navArea">
-             
-            <nav id="nav1">
-               <ul>
-                   <li><a href="index.html">Home</a></li>
-                   <li><a href="page1.html">Sports</a></li>
-                   <li><a href="page2.html">Entertainment</a></li>
-                   <li><a href="page3.html">Politics</a></li>
-                   <li><a href="page4.html">World News</a></li>
-                   <li><a href="page5.html">Science</a></li>
-                   <li><a class="active"  href="page6.html">Local</a></li>
-               </ul>
-            </nav>
-        </section>
+            <section class="navArea">
+
+                <nav id="nav1">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="page1.html">Sports</a></li>
+                        <li><a href="page2.html">Entertainment</a></li>
+                        <li><a href="page3.html">Politics</a></li>
+                        <li><a href="page4.html">World News</a></li>
+                        <li><a href="page5.html">Science</a></li>
+                        <li><a class="active"  href="page6.html">Country</a></li>
+                    </ul>
+                </nav>
+                
+            </section>
         
         
         <script>
             
+            function Show() {
+                var x = document.getElementById("dataCard");
+                if (x.style.display === "none") {
+                x.style.display = "block";
+             
+            }
+        }
+                
+            function Hide() {
+                var x = document.getElementById("dataCard");
+                x.style.display = "none";
+             
+        }
+        
+
           
             function invokeSearchTweets(inputText) {
                 var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
@@ -89,9 +93,10 @@
                 }
             }
             
-            function invokeShowLocalNews() {
-                var url = "http://localhost:8080/ExecCommand?command=ShowLocalNews"
+            function invokeShowLocalNews(inputText) {
+                var urlPrefix = "http://localhost:8080/ExecCommand?command=ShowLocalNews&queryCountry="
                 const Http = new XMLHttpRequest();
+                const url = encodeURI(urlPrefix + inputText.value);
 
                 //alert("URL is : " + url);
                 console.log("Invoking Http Get for URL=" + url);
@@ -101,53 +106,13 @@
 
                 Http.onreadystatechange = (e) => {
                   console.log("HttpResp -->" + Http.responseText)
-                  infoCard1.innerHTML = Http.responseText;
+                  dataCard.innerHTML = Http.responseText;
+                  Show()
                 }
             }
             
-            function displayInitial() {
-              var moreText = document.getElementById("more");
-              var buttonText = document.getElementById("button");
-              buttonText.innerHTML = "More"; 
-              moreText.style.display = "none";
-            }
             
-            function displayInitial2() {
-              var moreText2 = document.getElementById("more2");
-              var buttonText2 = document.getElementById("button2");
-              buttonText2.innerHTML = "More"; 
-              moreText2.style.display = "none";
-            }
-            
-            function displayMore() {
-              var moreText = document.getElementById("more");
-              var buttonText = document.getElementById("button");
-
-              if (initial.style.display === "none") {
-                initial.style.display = "inline";
-                buttonText.innerHTML = "More"; 
-                moreText.style.display = "none";
-              } else {
-                initial.style.display = "none";
-                buttonText.innerHTML = "Less"; 
-                moreText.style.display = "inline";
-              }
-            }
-            
-            function displayMore2() {
-              var moreText2 = document.getElementById("more2");
-              var buttonText2 = document.getElementById("button2");
-
-              if (initial2.style.display === "none") {
-                initial2.style.display = "inline";
-                buttonText2.innerHTML = "More"; 
-                moreText2.style.display = "none";
-              } else {
-                initial2.style.display = "none";
-                buttonText2.innerHTML = "Less"; 
-                moreText2.style.display = "inline";
-              }
-            }
+           
         </script>
         
     </body>
