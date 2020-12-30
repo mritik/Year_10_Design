@@ -19,13 +19,12 @@ h1{
 
  ul {
           list-style-type: none;
-          margin: 0;
-          padding: 0;
+          margin: 0px;
+          padding: 0px;
           overflow: hidden;
-          background-color:lightblue;
+          background-color:#8e9492;
           position: fixed;
           top: 0px;
-          margin-left: 0;
           width: 9%;
           z-index: 0;
         }
@@ -49,7 +48,7 @@ h1{
         .active {
           text-decoration: underline;
           font-family: "Times New Roman";
-          color: red
+          color: orangered;
         }
 
        
@@ -90,17 +89,6 @@ h1{
   border-radius: 10px;
 }
 
-.infoCard2 {
-
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  width: 100%;
-  margin-bottom: 20px;
-  background-color: #8e9492;
-  text-align: center;
-  padding: 5px;
-  position: relative;
-  overflow: scroll;
-}
 
 .dataCard {
 
@@ -112,6 +100,7 @@ h1{
   padding: 5px;
   position: relative;
   overflow: scroll;
+  border-radius: 10px;
 }
 
 section.infoCards{
@@ -148,6 +137,7 @@ section.navArea{
     position: relative;
     overflow: scroll;
     background-color: #8e9492;
+    border-radius: 10px;
 }
 
 
