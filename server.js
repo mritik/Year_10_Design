@@ -84,7 +84,7 @@ async function showLocalNews(country) {
 
 var server= http.Server(function(req, res) {
     
-     // Set CORS headers in order to not run into a CORS Error
+    // Set CORS headers in order to not run into a CORS Error
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Request-Method', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
@@ -183,7 +183,7 @@ var server= http.Server(function(req, res) {
                     const twtrRespBody = await searchTweets(queryExpr);
                     console.log("twtrRespBody = " + twtrRespBody.data);
                     var tweetData = twtrRespBody.data;
-
+                    //Write the data I want in the table
                     res.write('<table id="searchResultsTable">');
                     res.write('<tr>');
                     //res.write('<th>Num</th>');
@@ -222,7 +222,7 @@ var server= http.Server(function(req, res) {
                             var newsData = newsRespBody.articles;
 
                             console.log("newsData sz = " + newsData.length);
-                            
+                            //Write the data I want in the table
                             res.write('<caption><b>Top News</b></caption>')
                             res.write('\n')
                             res.write('<table id="newsResultsTable">');
@@ -258,9 +258,9 @@ var server= http.Server(function(req, res) {
                             var newsData = newsRespBody.articles;
 
                             console.log("newsData sz = " + newsData.length);
-                            
+                            //Write the data I want in the table
                             res.write('<caption><b>Sports News</b></caption>')
-                           res.write('\n')
+                            res.write('\n')
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
@@ -295,9 +295,9 @@ var server= http.Server(function(req, res) {
                             var newsData = newsRespBody.articles;
 
                             console.log("newsData sz = " + newsData.length);
-                            
+                            //Write the data I want in the table
                             res.write('<caption><b>Entertainment News</b></caption>')
-                           res.write('\n')
+                            res.write('\n')
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
                             res.write('<th>Headline</th>');
@@ -332,7 +332,7 @@ var server= http.Server(function(req, res) {
                             var newsData = newsRespBody.articles;
 
                             console.log("newsData sz = " + newsData.length);
-                            
+                            //Write the data I want in the table
                             res.write('<caption><b>Political News</b></caption>')
                             res.write('\n')
                             res.write('<table id="newsResultsTable">');
@@ -369,7 +369,7 @@ var server= http.Server(function(req, res) {
                             var newsData = newsRespBody.articles;
 
                             console.log("newsData sz = " + newsData.length);
-                            
+                            //Write the data I want in the table
                             res.write('<caption><b>World News</b></caption>')
                             res.write('\n')
                             res.write('<table id="newsResultsTable">');
@@ -405,7 +405,7 @@ var server= http.Server(function(req, res) {
                             var newsData = newsRespBody.articles;
 
                             console.log("newsData sz = " + newsData.length);
-                            
+                            //Write the data I want in the table
                             res.write('<caption><b>Science News</b></caption>')
                             res.write('\n')
                             res.write('<table id="newsResultsTable">');
@@ -447,7 +447,7 @@ var server= http.Server(function(req, res) {
                             var newsData = newsRespBody.articles;
                             console.log("newsData = " + newsData);
                             console.log("newsData sz = " + newsData.length);
-                            
+                            //Write the data I want in the table
                             res.write('\n')
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');

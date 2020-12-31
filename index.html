@@ -8,7 +8,7 @@
     </head>
     
 
-
+    <!-- Invoke These Functions to show news and hide the search results card when the page is loaded-->
     <body onload="invokeShowTopNews(), Hide()">
         
          <section class="navArea">
@@ -33,6 +33,7 @@
             <div class="searchContainer">
 
                 <input type="text" placeholder="Search Tweets..." name="search" id="searchText"> 
+                <!-- Invoke the function to search for tweets when the button is clicked-->
                 <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
 
                 
@@ -74,7 +75,7 @@
         
         <script>
             
-            
+            //If the Search Card is not being displayed, this function will display it
             function Show() {
                 var x = document.getElementById("searchCard");
                 if (x.style.display === "none") {
@@ -82,13 +83,13 @@
              
             }
         }
-                
+            //This function will hide the Search Card    
             function Hide() {
                 var x = document.getElementById("searchCard");
                 x.style.display = "none";
              
         }
-        
+            //This function will invoke the command Show Top News and create a Get Request   
             function invokeShowTopNews() {
                 var url = "http://localhost:8080/ExecCommand?command=ShowTopNews"
                 const Http = new XMLHttpRequest();
@@ -104,7 +105,7 @@
                   infoCard1.innerHTML = Http.responseText;
                 }
             }
-             
+            //This function will invoke the command Search Tweets with the Input Text as the query and create a Get Request 
             function invokeSearchTweets(inputText) {
                 var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
                 const Http = new XMLHttpRequest();
@@ -115,7 +116,7 @@
                 
                 Http.open("GET", url);
                 Http.send();
-
+                //Once the data is received the parsed response will appear in the Search Card
                 Http.onreadystatechange = (e) => {
                     console.log("HttpResp -->" + Http.responseText)
                     searchCard.innerHTML = Http.responseText;
