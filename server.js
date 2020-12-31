@@ -114,7 +114,7 @@ var server= http.Server(function(req, res) {
     var footer = new RegExp("footer.html");
     var jQuery = new RegExp("jquery-3.3.1.js");
     var mystyles = new RegExp("mystyles.css");
-    var logoImg = new RegExp("logo.jpg");
+    var logoImg = new RegExp("logo.png");
     var bgImg = new RegExp("bgimg2.jpg");
     var execCmd = new RegExp("ExecCommand");
     switch (true) {  

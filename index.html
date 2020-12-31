@@ -9,19 +9,20 @@
             crossorigin="anonymous">
         </script>
         <script> 
+            //Loading external header and footer html pages using jQuery
             $(function(){
               $("#header").load("header.html"); 
               $("#footer").load("footer.html"); 
             });
         </script>
-        <title>Mritik News!</title>
+        <title>Mritik Media News</title>
     </head>
     
     
     <!-- Invoke These Functions to show news and hide the search results card when the page is loaded-->
     <body onload="invokeShowTopNews(), Hide()">
         
-        <center><div id="header" class="headerStyle"></div></center>
+        <!--<center><div id="header" class="headerStyle"></div></center>-->
         
          <section class="navArea">
              
@@ -60,7 +61,7 @@
     <center>    
 
             <section class="infoCards">
-                <h1><b>Today's Media News</b></h1>
+                <h1><b>Latest Top News</b></h1>
 
                 <div class="infoCard1" id="infoCard1">
 

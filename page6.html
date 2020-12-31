@@ -14,19 +14,52 @@
               $("#footer").load("footer.html"); 
             });
         </script>
-        <title>Mritik News!</title>
+        <title>Mritik News</title>
     </head>
     
 
 
-    <body onload="Hide()">
-            
-        <center><div id="header" class="headerStyle"></div></center>
+    <body onload="Hide(), Hide2()">
+        
+         <!--<center><div id="header" class="headerStyle"></div></center>-->
 
+        <section class="navArea">
+
+                <nav id="nav1">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="page1.html">Sports</a></li>
+                        <li><a href="page2.html">Entertainment</a></li>
+                        <li><a href="page3.html">Politics</a></li>
+                        <li><a href="page4.html">World News</a></li>
+                        <li><a href="page5.html">Science</a></li>
+                        <li><a class="active"  href="page6.html">Country</a></li>
+                    </ul>
+                </nav>
+                
+        </section>
+        
+         <section class="searchArea">
+            
+            <div class="searchContainer">
+
+                <input type="text" placeholder="Search Tweets..." name="search" id="searchText"> 
+                <!-- Invoke the function to search for tweets when the button is clicked-->
+                <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
+
+                
+                    <div class="searchCard" id="searchCard">
+
+                    </div>
+                
+            </div>
+        
+        </section>
+            
         <center>    
 
             <section class="infoCards">
-                <h1><b>Media News</b></h1>
+                <h1><b>Latest Local News</b></h1>
 
                 <div class="infoCard1" id="infoCard1">
 
@@ -35,8 +68,8 @@
 
                     <div class="countryContainer">
 
-                        <input type="text" placeholder="Enter ISO Country Code..." name="search" id="searchText"> 
-                        <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeShowLocalNews(searchText)"><i class = "fa fa-search"></i></button>  
+                        <input type="text" placeholder="Enter ISO Country Code..." name="search" id="searchCountries"> 
+                        <button class= "searchBtn" type = submit id="searchCountriesBtn" onclick="invokeShowLocalNews(searchCountries)"><i class = "fa fa-search"></i></button>  
                         <a href= "https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
 
 
@@ -51,36 +84,31 @@
             </section>
 
         </center>  
-        
-            <section class="navArea">
-
-                <nav id="nav1">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="page1.html">Sports</a></li>
-                        <li><a href="page2.html">Entertainment</a></li>
-                        <li><a href="page3.html">Politics</a></li>
-                        <li><a href="page4.html">World News</a></li>
-                        <li><a href="page5.html">Science</a></li>
-                        <li><a class="active"  href="page6.html">Country</a></li>
-                    </ul>
-                </nav>
-                
-            </section>
-        
-        
+    
         <script>
             
             function Show() {
                 var x = document.getElementById("dataCard");
                 if (x.style.display === "none") {
                 x.style.display = "block";
-             
             }
         }
                 
             function Hide() {
                 var x = document.getElementById("dataCard");
+                x.style.display = "none";
+        }
+                
+            function Show2() {
+                var x = document.getElementById("searchCard");
+                if (x.style.display === "none") {
+                x.style.display = "block";
+             
+            }
+        }
+                
+            function Hide2() {
+                var x = document.getElementById("searchCard");
                 x.style.display = "none";
              
         }
@@ -101,6 +129,7 @@
                 Http.onreadystatechange = (e) => {
                   console.log("HttpResp -->" + Http.responseText)
                   searchCard.innerHTML = Http.responseText;
+                  Show2()
                 }
             }
             
@@ -126,7 +155,8 @@
            
         </script>
         
-        <center><div id="footer" class="footerStyle"></div></center>
+<!--        <center><div id="footer" class="footerStyle" style="margin-top: 130px;"></div></center> -->
+        
     </body>
 
 </html>

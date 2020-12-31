@@ -9,25 +9,44 @@
             crossorigin="anonymous">
         </script>
         <script> 
+            //Loading external header and footer html pages using jQuery
             $(function(){
               $("#header").load("header.html"); 
               $("#footer").load("footer.html"); 
             });
         </script>
-        <title>Mritik News!</title>
+        <title>Mritik Media News</title>
     </head>
     
-
-
+    
+    <!-- Invoke These Functions to show news and hide the search results card when the page is loaded-->
     <body onload="invokeShowPoliticalNews(), Hide()">
         
-        <center><div id="header" class="headerStyle"></div></center>
+         <!--<center><div id="header" class="headerStyle"></div></center>-->
+        
+         <section class="navArea">
+             
+            <nav id="nav1">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="page1.html">Sports</a></li>
+                    <li><a href="page2.html">Entertainment</a></li>
+                    <li><a class="active"href="page3.html">Politics</a></li>
+                    <li><a href="page4.html">World News</a></li>
+                    <li><a href="page5.html">Science</a></li>
+                    <li><a href="page6.html">Country</a></li>
+               </ul>
+            </nav>
+            
+        </section>
+        
 
         <section class="searchArea">
             
             <div class="searchContainer">
 
                 <input type="text" placeholder="Search Tweets..." name="search" id="searchText"> 
+                <!-- Invoke the function to search for tweets when the button is clicked-->
                 <button class= "searchBtn" type = submit id="searchTweetsBtn" onclick="invokeSearchTweets(searchText)"><i class = "fa fa-search"></i></button>
 
                 
@@ -39,11 +58,10 @@
         
         </section>
     
-       
     <center>    
 
             <section class="infoCards">
-                <h1><b>Media News</b></h1>
+                <h1><b>Latest Political News</b></h1>
 
                 <div class="infoCard1" id="infoCard1">
 
@@ -65,26 +83,9 @@
         </center> 
        
         
-        <section class="navArea">
-             
-            <nav id="nav1">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="page1.html">Sports</a></li>
-                    <li><a href="page2.html">Entertainment</a></li>
-                    <li><a class="active" href="page3.html">Politics</a></li>
-                    <li><a href="page4.html">World News</a></li>
-                    <li><a href="page5.html">Science</a></li>
-                    <li><a href="page6.html">Country</a></li>
-               </ul>
-            </nav>
-            
-        </section>
-        
-        
         <script>
             
-            
+            //If the Search Card is not being displayed, this function will display it
             function Show() {
                 var x = document.getElementById("searchCard");
                 if (x.style.display === "none") {
@@ -92,13 +93,13 @@
              
             }
         }
-                
+            //This function will hide the Search Card    
             function Hide() {
                 var x = document.getElementById("searchCard");
                 x.style.display = "none";
              
         }
-        
+            //This function will invoke the command Show Top News and create a Get Request   
             function invokeShowPoliticalNews() {
                 var url = "http://localhost:8080/ExecCommand?command=ShowPoliticalNews"
                 const Http = new XMLHttpRequest();
@@ -114,7 +115,7 @@
                   infoCard1.innerHTML = Http.responseText;
                 }
             }
-             
+            //This function will invoke the command Search Tweets with the Input Text as the query and create a Get Request 
             function invokeSearchTweets(inputText) {
                 var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
                 const Http = new XMLHttpRequest();
@@ -125,7 +126,7 @@
                 
                 Http.open("GET", url);
                 Http.send();
-
+                //Once the data is received the parsed response will appear in the Search Card
                 Http.onreadystatechange = (e) => {
                     console.log("HttpResp -->" + Http.responseText)
                     searchCard.innerHTML = Http.responseText;
@@ -158,6 +159,7 @@
 
         </script>
         
+       
         <center><div id="footer" class="footerStyle"></div></center>
         
     </body>
