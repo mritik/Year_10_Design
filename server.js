@@ -110,7 +110,11 @@ var server= http.Server(function(req, res) {
     var pg4 = new RegExp("page4.html");
     var pg5 = new RegExp("page5.html");
     var pg6 = new RegExp("page6.html");
+    var header = new RegExp("header.html");
+    var footer = new RegExp("footer.html");
+    var jQuery = new RegExp("jquery-3.3.1.js");
     var mystyles = new RegExp("mystyles.css");
+    var logoImg = new RegExp("logo.jpg");
     var bgImg = new RegExp("bgimg2.jpg");
     var execCmd = new RegExp("ExecCommand");
     switch (true) {  
@@ -138,7 +142,9 @@ var server= http.Server(function(req, res) {
         case pg4.test(path):  
         case pg5.test(path):  
         case pg6.test(path):  
-        case mystyles.test(path):  
+        case header.test(path):  
+        case footer.test(path):  
+        case logoImg.test(path):
         case bgImg.test(path):  {
             fs.readFile(__dirname + path, function(error, data) {  
                 if (error) {  
@@ -155,6 +161,42 @@ var server= http.Server(function(req, res) {
             });  
             break;  
         }
+            
+        case mystyles.test(path):  
+        {
+            fs.readFile(__dirname + path, function(error, data) {  
+                if (error) {  
+                    res.writeHead(404);  
+                    res.write(error);  
+                    res.end();  
+                } else {  
+                    res.writeHead(200, {  
+                        'Content-Type': 'text/css'  
+                    });  
+                    res.write(data);  
+                    res.end();  
+                }  
+            });  
+            break;  
+        }    
+            
+        case jQuery.test(path):    
+        {
+            fs.readFile(__dirname + path, function(error, data) {  
+                if (error) {  
+                    res.writeHead(404);  
+                    res.write(error);  
+                    res.end();  
+                } else {  
+                    res.writeHead(200, {  
+                        'Content-Type': 'text/javascript'  
+                    });  
+                    res.write(data);  
+                    res.end();  
+                }  
+            });  
+            break;  
+        }        
         
         case execCmd.test(path): {
              res.writeHead(200, { 'Content-Type': 'text/html' }); 

@@ -3,15 +3,26 @@
     <head>
         <link rel="stylesheet" href="mystyles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="jquery-3.4.0.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script
+            src="jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous">
+        </script>
+        <script> 
+            $(function(){
+              $("#header").load("header.html"); 
+              $("#footer").load("footer.html"); 
+            });
+        </script>
+        <title>Mritik News!</title>
     </head>
     
 
 
     <body onload="invokeShowScienceNews(), Hide()">
         
-
+        <center><div id="header" class="headerStyle"></div></center>
+        
         <section class="searchArea">
             
             <div class="searchContainer">
@@ -28,8 +39,6 @@
         
         </section>
     
-
-        
        
     <center>    
 
@@ -148,6 +157,8 @@
             
 
         </script>
+        
+        <center><div id="footer" class="footerStyle"></div></center>
         
     </body>
 

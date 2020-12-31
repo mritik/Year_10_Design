@@ -3,13 +3,25 @@
     <head>
         <link rel="stylesheet" href="mystyles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="jquery-3.4.0.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script
+            src="jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous">
+        </script>
+        <script> 
+            $(function(){
+              $("#header").load("header.html"); 
+              $("#footer").load("footer.html"); 
+            });
+        </script>
+        <title>Mritik News!</title>
     </head>
     
-
+    
     <!-- Invoke These Functions to show news and hide the search results card when the page is loaded-->
     <body onload="invokeShowTopNews(), Hide()">
+        
+        <center><div id="header" class="headerStyle"></div></center>
         
          <section class="navArea">
              
@@ -45,13 +57,10 @@
         
         </section>
     
-
-        
-       
     <center>    
 
             <section class="infoCards">
-                <h1><b>Media News</b></h1>
+                <h1><b>Today's Media News</b></h1>
 
                 <div class="infoCard1" id="infoCard1">
 
@@ -148,6 +157,9 @@
             
 
         </script>
+        
+       
+        <center><div id="footer" class="footerStyle"></div></center>
         
     </body>
 

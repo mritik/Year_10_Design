@@ -6,15 +6,23 @@ body{
     background-image: url(bgimg2.jpg);
     background-size: cover;
 }
+
+.headerStyle{
+    float: center;
+    font-family: "Times New Roman", serif;
+    color: red;
+}
+
+.footerStyle{
+    float: center;
+    font-family: "Times New Roman", serif;
+    color: blue;
+}
+
 h1{
     font-family: "Times New Roman", serif;
     color: black;
     margin-top: 20px;
-
-
-
-
-        
 }
 
  ul {
