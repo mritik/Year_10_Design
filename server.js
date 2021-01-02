@@ -15,6 +15,20 @@ const token = process.env.BEARER_TOKEN;
 const twitterEndpointURL = "https://api.twitter.com/2/tweets/search/recent"
 const newsEndpointURL = "https://newscatcher.p.rapidapi.com/v1/latest_headlines"
 
+function uniqueResults(newsData) {
+    
+    // NewsData Map with Key as Title and NewsData Article as Value
+    var uniqueNewsMap = new Map();
+    for(var i=0; i< newsData.length; i++) {
+        var newsDataItem = newsData[i];
+        uniqueNewsMap.set(newsDataItem['title'], newsDataItem);
+    }
+    
+    console.log("Filtered newsData from records: " + newsData.length + " to unique records: " + uniqueNewsMap.size);
+    return Array.from(uniqueNewsMap.values());
+    
+}
+
 async function searchTweets(qs) {
     // parameters for getting tweets
     const params = {
@@ -261,7 +275,7 @@ var server= http.Server(function(req, res) {
                         const newsRespBody = await showNews("news");
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
-                            var newsData = newsRespBody.articles;
+                            var newsData = uniqueResults(newsRespBody.articles);
 
                             console.log("newsData sz = " + newsData.length);
                             //Write the data I want in the table
@@ -297,7 +311,7 @@ var server= http.Server(function(req, res) {
                         const newsRespBody = await showNews("sport");
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
-                            var newsData = newsRespBody.articles;
+                            var newsData = uniqueResults(newsRespBody.articles);
 
                             console.log("newsData sz = " + newsData.length);
                             //Write the data I want in the table
@@ -334,7 +348,7 @@ var server= http.Server(function(req, res) {
 
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
-                            var newsData = newsRespBody.articles;
+                            var newsData = uniqueResults(newsRespBody.articles);
 
                             console.log("newsData sz = " + newsData.length);
                             //Write the data I want in the table
@@ -371,7 +385,7 @@ var server= http.Server(function(req, res) {
 
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
-                            var newsData = newsRespBody.articles;
+                            var newsData = uniqueResults(newsRespBody.articles);
 
                             console.log("newsData sz = " + newsData.length);
                             //Write the data I want in the table
@@ -408,7 +422,7 @@ var server= http.Server(function(req, res) {
 
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
-                            var newsData = newsRespBody.articles;
+                            var newsData = uniqueResults(newsRespBody.articles);
 
                             console.log("newsData sz = " + newsData.length);
                             //Write the data I want in the table
@@ -444,7 +458,7 @@ var server= http.Server(function(req, res) {
 
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
-                            var newsData = newsRespBody.articles;
+                            var newsData = uniqueResults(newsRespBody.articles);
 
                             console.log("newsData sz = " + newsData.length);
                             //Write the data I want in the table
@@ -486,7 +500,8 @@ var server= http.Server(function(req, res) {
 
                         console.log("newsRespBody = " + newsRespBody);
                         if(null != newsRespBody) {
-                            var newsData = newsRespBody.articles;
+                            var newsData = uniqueResults(newsRespBody.articles);
+                            
                             console.log("newsData = " + newsData);
                             console.log("newsData sz = " + newsData.length);
                             //Write the data I want in the table
