@@ -129,6 +129,8 @@ var server= http.Server(function(req, res) {
     var jQuery = new RegExp("jquery-3.3.1.js");
     var mystyles = new RegExp("mystyles.css");
     var logoImg = new RegExp("logo.png");
+    var BreakingNewsImg = new RegExp("Breaking_News.jpeg");
+    var SportsImg = new RegExp("sports.jpeg");
     var bgImg = new RegExp("bgimg2.jpg");
     var execCmd = new RegExp("ExecCommand");
     switch (true) {  
