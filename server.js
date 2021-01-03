@@ -131,6 +131,10 @@ var server= http.Server(function(req, res) {
     var logoImg = new RegExp("logo.png");
     var BreakingNewsImg = new RegExp("Breaking_News.jpeg");
     var SportsImg = new RegExp("sports.jpeg");
+    var EntertainmentImg = new RegExp("Entertainment.jpg");
+    var PoliticsImg = new RegExp("politics.jpg");
+    var ScienceImg = new RegExp("Science.jpeg");
+    var CountryImg = new RegExp("Country.jpeg");
     var bgImg = new RegExp("bgimg2.jpg");
     var execCmd = new RegExp("ExecCommand");
     switch (true) {  
@@ -161,6 +165,12 @@ var server= http.Server(function(req, res) {
         case header.test(path):  
         case footer.test(path):  
         case logoImg.test(path):
+        case BreakingNewsImg.test(path):
+        case SportsImg.test(path):
+        case EntertainmentImg.test(path):
+        case PoliticsImg.test(path):
+        case ScienceImg.test(path):
+        case CountryImg.test(path):
         case bgImg.test(path):  {
             fs.readFile(__dirname + path, function(error, data) {  
                 if (error) {  
