@@ -15,6 +15,22 @@ const token = process.env.BEARER_TOKEN;
 const twitterEndpointURL = "https://api.twitter.com/2/tweets/search/recent"
 const newsEndpointURL = "https://newscatcher.p.rapidapi.com/v1/latest_headlines"
 
+function serveResource(res, mimeType, path) {
+    fs.readFile(__dirname + path, function(error, data) {  
+        if (error) {  
+            res.writeHead(404);  
+            res.write(error);  
+            res.end();  
+        } else {  
+            res.writeHead(200, {  
+                'Content-Type': mimeType  
+            });  
+            res.write(data);  
+            res.end();  
+        }  
+    });  
+}
+
 function uniqueResults(newsData) {
     
     // NewsData Map with Key as Title and NewsData Article as Value
@@ -129,32 +145,40 @@ var server= http.Server(function(req, res) {
     var jQuery = new RegExp("jquery-3.3.1.js");
     var mystyles = new RegExp("mystyles.css");
     var logoImg = new RegExp("logo.png");
-    var BreakingNewsImg = new RegExp("Breaking_News.jpeg");
-    var SportsImg = new RegExp("sports.jpeg");
-    var EntertainmentImg = new RegExp("Entertainment.jpg");
-    var PoliticsImg = new RegExp("politics.jpg");
-    var ScienceImg = new RegExp("Science.jpeg");
-    var CountryImg = new RegExp("Country.jpeg");
+    var breakingNewsImg = new RegExp("Breaking_News.jpeg");
+    var sportsImg = new RegExp("sports.jpeg");
+    var entertainmentImg = new RegExp("Entertainment.jpg");
+    var politicsImg = new RegExp("politics.jpg");
+    var scienceImg = new RegExp("Science.jpeg");
+    var worldImg = new RegExp("World.jpeg");
+    var countryImg = new RegExp("Country.jpeg");
     var bgImg = new RegExp("bgimg2.jpg");
     var execCmd = new RegExp("ExecCommand");
-    switch (true) {  
-        case homePg.test(path): {
-            fs.readFile(__dirname + "/index.html", function(error, data) {  
-                if (error) {  
-                    response.writeHead(404);  
-                    response.write(error);  
-                    response.end();  
-                } else {  
-                    response.writeHead(200, {  
-                        'Content-Type': 'text/html'  
-                    });  
-                    response.write(data);  
-                    response.end();  
-                }  
-            });  
+    switch (true) {
+        
+        case bgImg.test(path): {
+            serveResource(res, 'image/png', path);
             break;  
+        }    
+            
 
+        case logoImg.test(path):
+        case breakingNewsImg.test(path):
+        case sportsImg.test(path):
+        case entertainmentImg.test(path):
+        case politicsImg.test(path):
+        case worldImg.test(path):
+        case scienceImg.test(path):
+        case countryImg.test(path):  {
+            serveResource(res, 'image/jpeg', path);
+            break;  
+        }    
+            
+        case homePg.test(path): {
+            serveResource(res, 'text/html', "/index.html");
+            break;  
         }
+            
         case indexPg.test(path):        
         case pg1.test(path):  
         case pg2.test(path):  
@@ -163,64 +187,18 @@ var server= http.Server(function(req, res) {
         case pg5.test(path):  
         case pg6.test(path):  
         case header.test(path):  
-        case footer.test(path):  
-        case logoImg.test(path):
-        case BreakingNewsImg.test(path):
-        case SportsImg.test(path):
-        case EntertainmentImg.test(path):
-        case PoliticsImg.test(path):
-        case ScienceImg.test(path):
-        case CountryImg.test(path):
-        case bgImg.test(path):  {
-            fs.readFile(__dirname + path, function(error, data) {  
-                if (error) {  
-                    res.writeHead(404);  
-                    res.write(error);  
-                    res.end();  
-                } else {  
-                    res.writeHead(200, {  
-                        'Content-Type': 'text/html'  
-                    });  
-                    res.write(data);  
-                    res.end();  
-                }  
-            });  
+        case footer.test(path): {
+            serveResource(res, 'text/html', path);
             break;  
         }
             
-        case mystyles.test(path):  
-        {
-            fs.readFile(__dirname + path, function(error, data) {  
-                if (error) {  
-                    res.writeHead(404);  
-                    res.write(error);  
-                    res.end();  
-                } else {  
-                    res.writeHead(200, {  
-                        'Content-Type': 'text/css'  
-                    });  
-                    res.write(data);  
-                    res.end();  
-                }  
-            });  
+        case mystyles.test(path):  {
+            serveResource(res, 'text/css', path);
             break;  
         }    
             
-        case jQuery.test(path):    
-        {
-            fs.readFile(__dirname + path, function(error, data) {  
-                if (error) {  
-                    res.writeHead(404);  
-                    res.write(error);  
-                    res.end();  
-                } else {  
-                    res.writeHead(200, {  
-                        'Content-Type': 'text/javascript'  
-                    });  
-                    res.write(data);  
-                    res.end();  
-                }  
-            });  
+        case jQuery.test(path): {
+            serveResource(res, 'text/javascript', path);
             break;  
         }        
         
@@ -547,6 +525,7 @@ var server= http.Server(function(req, res) {
         break; 
         }
         default:  {
+            console.log("Unresolved path = " + path);
             res.writeHead(404);  
             res.write("Oops this page doesn't exist - 404");  
             res.end();  
