@@ -1,0 +1,27 @@
+{
+  "name": "year_10_design",
+  "version": "1.0.0",
+  "description": "Mritik's Media News - Year 10 Design Project",
+  "main": "server.js",
+  "dependencies": {
+    "got": "^11.8.0",
+    "needle": "^2.5.2",
+    "oauth-1.0a": "^2.2.6",
+    "unirest": "^0.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mritik/Year_10_Design.git"
+  },
+  "author": "Mritik Dodla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mritik/Year_10_Design/issues"
+  },
+  "homepage": "https://github.com/mritik/Year_10_Design#readme"
+}
