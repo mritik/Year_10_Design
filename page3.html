@@ -90,16 +90,16 @@
             function Show() {
                 var x = document.getElementById("searchCard");
                 if (x.style.display === "none") {
-                x.style.display = "block";
-             
+                    x.style.display = "block";
+                }
             }
-        }
+            
             //This function will hide the Search Card    
             function Hide() {
                 var x = document.getElementById("searchCard");
                 x.style.display = "none";
-             
-        }
+            }
+            
             //This function will invoke the command Show Top News and create a Get Request   
             function invokeShowPoliticalNews() {
                 var url = "/ExecCommand?command=ShowPoliticalNews"
@@ -116,6 +116,7 @@
                   infoCard1.innerHTML = Http.responseText;
                 }
             }
+            
             //This function will invoke the command Search Tweets with the Input Text as the query and create a Get Request 
             function invokeSearchTweets(inputText) {
                 var urlPrefix = "/ExecCommand?command=SearchTweets&queryExpr="

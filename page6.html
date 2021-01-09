@@ -19,7 +19,7 @@
     
 
 
-    <body onload="Hide(), Hide2()">
+    <body onload="Hide2(), invokeShowDefaultLocalNews()">
         
          <center><div id="header" class="headerStyle"></div></center>
 
@@ -69,12 +69,12 @@
                     <h4><b>Country Local News</b></h4>
 
                     <div class="countryContainer">
-
-                        <input type="text" placeholder="Enter ISO Country Code..." name="search" id="searchCountries"> 
-                        <button class= "searchBtn" type = submit id="searchCountriesBtn" onclick="invokeShowLocalNews(searchCountries)"><i class = "fa fa-search"></i></button>  
+                        <p>Enter ISO Country Code like 'CA', 'US' etc.
                         <a href= "https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> </a>
-
-
+                        <br/>
+                        </p>
+                        <input type="text" value="CA" name="search" id="searchCountries"> 
+                        <button class= "searchBtn" type = submit id="searchCountriesBtn" onclick="invokeShowLocalNews(searchCountries)"><i class = "fa fa-search"></i></button>  
                     </div>
 
                 </div>
@@ -92,30 +92,26 @@
             function Show() {
                 var x = document.getElementById("dataCard");
                 if (x.style.display === "none") {
-                x.style.display = "block";
+                    x.style.display = "block";
+                }
             }
-        }
-                
+
             function Hide() {
                 var x = document.getElementById("dataCard");
                 x.style.display = "none";
-        }
-                
+            }
+
             function Show2() {
                 var x = document.getElementById("searchCard");
                 if (x.style.display === "none") {
-                x.style.display = "block";
-             
+                    x.style.display = "block";
+                }
             }
-        }
-                
-            function Hide2() {
-                var x = document.getElementById("searchCard");
-                x.style.display = "none";
-             
-        }
-        
 
+            function Hide2() {
+                    var x = document.getElementById("searchCard");
+                    x.style.display = "none";
+            }
           
             function invokeSearchTweets(inputText) {
                 var urlPrefix = "/ExecCommand?command=SearchTweets&queryExpr="
@@ -135,7 +131,28 @@
                 }
             }
             
+            function invokeShowDefaultLocalNews() {
+                var country = "CA";
+                //alert('invokeShowDefaultLocalNews country = ' + country)
+                var urlPrefix = "/ExecCommand?command=ShowLocalNews&queryCountry="
+                const Http = new XMLHttpRequest();
+                const url = encodeURI(urlPrefix + country);
+
+                //alert("URL is : " + url);
+                console.log("Invoking Http Get for URL=" + url);
+                
+                Http.open("GET", url);
+                Http.send();
+
+                Http.onreadystatechange = (e) => {
+                  console.log("HttpResp -->" + Http.responseText)
+                  dataCard.innerHTML = Http.responseText;
+                  Show()
+                }
+            }
+            
             function invokeShowLocalNews(inputText) {
+                //alert('invokeShowLocalNews ' + inputText.value)
                 var urlPrefix = "/ExecCommand?command=ShowLocalNews&queryCountry="
                 const Http = new XMLHttpRequest();
                 const url = encodeURI(urlPrefix + inputText.value);
