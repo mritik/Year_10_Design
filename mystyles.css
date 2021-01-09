@@ -14,13 +14,18 @@ img {
 }
 
 .headerStyle{
-    background-image: url(logo.png);
+    /*background-image: url(logo.png);
     background-size: cover;
     font-family: "Times New Roman", serif;
     background-color:orange;
-    color: red;
+    color: red;*/
     width: 100%;
-    height: 110px;
+    height: 120px;
+    background: #1abc9c;
+    color: white;
+    font-size: 20px;
+    margin-top: 0px;
+    padding: 10px;
 }
 
 .footerStyle{
@@ -29,9 +34,9 @@ img {
     text-align-last: left;
     font-size: 20px;
     padding-left: 20px;
-    background-color: orange;
+    background-color: #1abc9c;
     width: 100%;
-    height: 100px;
+    height: 130px;
     margin-top: 280px;
     
 }
@@ -40,6 +45,11 @@ h1{
     font-family: "Times New Roman", serif;
     color: black;
     margin-top: 0px;
+}
+h2{
+    color: white;
+    margin-top: 0px;
+    font-size: 50px;
 }
 
  ul {
