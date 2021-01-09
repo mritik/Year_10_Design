@@ -102,7 +102,7 @@
         }
             //This function will invoke the command Show Top News and create a Get Request   
             function invokeShowPoliticalNews() {
-                var url = "http://localhost:8080/ExecCommand?command=ShowPoliticalNews"
+                var url = "/ExecCommand?command=ShowPoliticalNews"
                 const Http = new XMLHttpRequest();
 
                 //alert("URL is : " + url);
@@ -118,7 +118,7 @@
             }
             //This function will invoke the command Search Tweets with the Input Text as the query and create a Get Request 
             function invokeSearchTweets(inputText) {
-                var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
+                var urlPrefix = "/ExecCommand?command=SearchTweets&queryExpr="
                 const Http = new XMLHttpRequest();
                 const url = encodeURI(urlPrefix + inputText.value);
                 

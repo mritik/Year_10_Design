@@ -12,6 +12,7 @@ var fs = require('fs');
 const token = process.env.BEARER_TOKEN || 'AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh'; 
 //const token = “AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh”; 
 const PORT = process.env.PORT || 8080;
+const MYSERVERHOST = process.env.MYSERVERHOST || '0.0.0.0';
 
 const twitterEndpointURL = "https://api.twitter.com/2/tweets/search/recent"
 const newsEndpointURL = "https://newscatcher.p.rapidapi.com/v1/latest_headlines"
@@ -539,5 +540,5 @@ var server= http.Server(function(req, res) {
     }  
 });
        
-console.log(`Starting SearchTweets Server on port ${ PORT }`);
-server.listen(PORT, 'localhost')
+console.log(`Starting SearchTweets Server on host ${ MYSERVERHOST } port ${ PORT }`);
+server.listen(PORT, MYSERVERHOST)

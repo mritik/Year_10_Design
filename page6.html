@@ -118,7 +118,7 @@
 
           
             function invokeSearchTweets(inputText) {
-                var urlPrefix = "http://localhost:8080/ExecCommand?command=SearchTweets&queryExpr="
+                var urlPrefix = "/ExecCommand?command=SearchTweets&queryExpr="
                 const Http = new XMLHttpRequest();
                 const url = encodeURI(urlPrefix + inputText.value);
                 
@@ -136,7 +136,7 @@
             }
             
             function invokeShowLocalNews(inputText) {
-                var urlPrefix = "http://localhost:8080/ExecCommand?command=ShowLocalNews&queryCountry="
+                var urlPrefix = "/ExecCommand?command=ShowLocalNews&queryCountry="
                 const Http = new XMLHttpRequest();
                 const url = encodeURI(urlPrefix + inputText.value);
 
