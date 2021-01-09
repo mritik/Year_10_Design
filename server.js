@@ -130,9 +130,14 @@ var server= http.Server(function(req, res) {
     // Get the Requested Path and Server html files if requested
     // If Not html file Request then execute Backend Services and Render Html Response based on Command
     var path = url.parse(req.url).pathname;  
-    
     console.log("path = " + path);
     console.log("__dirname +path = " + __dirname + path);
+    
+    if(path == "/") {
+        path = "/index.html";
+        console.log("Redirecting path = / to path= " + path);
+        console.log("__dirname +path = " + __dirname + path);
+    }
     
     var homePg = new RegExp("home");
     var indexPg = new RegExp("index.html");
@@ -164,7 +169,6 @@ var server= http.Server(function(req, res) {
             break;  
         }    
             
-
         case logoImg.test(path):
         case showTweetImg.test(path):
         case breakingNewsImg.test(path):
