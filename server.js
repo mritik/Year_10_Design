@@ -278,7 +278,7 @@ var server= http.Server(function(req, res) {
 
                             console.log("newsData sz = " + newsData.length);
                             //Write the data I want in the table
-                            res.write('<h1><b>Top News</b></h1>')
+                            res.write('<p><b>Top News</b></p>')
                             res.write('\n')
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');
