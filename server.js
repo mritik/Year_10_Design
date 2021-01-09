@@ -9,8 +9,9 @@ var fs = require('fs');
 
 // The code below sets the bearer token from the environment variables
 // export BEARER_TOKEN='AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh' 
-const token = process.env.BEARER_TOKEN; 
+const token = process.env.BEARER_TOKEN || 'AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh'; 
 //const token = “AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh”; 
+const PORT = process.env.PORT || 8080;
 
 const twitterEndpointURL = "https://api.twitter.com/2/tweets/search/recent"
 const newsEndpointURL = "https://newscatcher.p.rapidapi.com/v1/latest_headlines"
@@ -537,7 +538,6 @@ var server= http.Server(function(req, res) {
  
     }  
 });
-
-
-console.log("Starting SearchTweets Server on port 8080.")                     
-server.listen(8080, 'localhost')
+       
+console.log(`Starting SearchTweets Server on port ${ PORT }`);
+server.listen(PORT, 'localhost')
