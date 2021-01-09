@@ -145,6 +145,7 @@ var server= http.Server(function(req, res) {
     var jQuery = new RegExp("jquery-3.3.1.js");
     var mystyles = new RegExp("mystyles.css");
     var logoImg = new RegExp("logo.png");
+    var showTweetImg = new RegExp("showTweet.png");
     var breakingNewsImg = new RegExp("Breaking_News.jpeg");
     var sportsImg = new RegExp("sports.jpeg");
     var entertainmentImg = new RegExp("Entertainment.jpg");
@@ -163,6 +164,7 @@ var server= http.Server(function(req, res) {
             
 
         case logoImg.test(path):
+        case showTweetImg.test(path):
         case breakingNewsImg.test(path):
         case sportsImg.test(path):
         case entertainmentImg.test(path):
@@ -236,8 +238,8 @@ var server= http.Server(function(req, res) {
                     //res.write('<th>ID</th>');
                     //res.write('<th>Author ID</th>');
                     //res.write('<th>CreatedDateTime</th>');
-                    res.write('<th>TweetText</th>');
-                    res.write('<th>ShowTweet</th>');
+                    res.write('<th>Tweet Text</th>');
+                    res.write('<th>Show</th>');
                     res.write('</tr>');
 
                     for(var i=0; i< tweetData.length; i++) {
@@ -249,7 +251,8 @@ var server= http.Server(function(req, res) {
                         res.write('<td>' + tweetData[i]['text'] + '</td>');
                         // https://twitter.com/i/web/status/{tweetid}
                         var tweetUrl = "https://twitter.com/i/web/status/" + tweetData[i]['id'];
-                        res.write('<td><a href="' + tweetUrl + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
+                        //res.write('<td><a href="' + tweetUrl + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
+                        res.write('<td><a href="' + tweetUrl + '" target="_blank">' + '<img src="/images/showTweet.png" alt="ShowTweet" width=20" height="20"></img>' + '</a></td>');
                         res.write('</tr>');
                     }
 
@@ -269,7 +272,7 @@ var server= http.Server(function(req, res) {
 
                             console.log("newsData sz = " + newsData.length);
                             //Write the data I want in the table
-                            res.write('<caption><b>Top News</b></caption>')
+                            res.write('<h1><b>Top News</b></h1>')
                             res.write('\n')
                             res.write('<table id="newsResultsTable">');
                             res.write('<tr>');

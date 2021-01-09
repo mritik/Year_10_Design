@@ -20,7 +20,7 @@ img {
     background-color:orange;
     color: red;*/
     width: 100%;
-    height: 120px;
+    height: 130px;
     background: #1abc9c;
     color: white;
     font-size: 20px;
@@ -42,14 +42,25 @@ img {
 }
 
 h1{
-    font-family: "Times New Roman", serif;
+    font-family: "Arial Bold", sans-serif;
     color: black;
     margin-top: 0px;
 }
 h2{
+    font-family: "Arial Bold", sans-serif;
     color: white;
     margin-top: 0px;
     font-size: 50px;
+}
+h3{
+    font-family: "Arial Bold", sans-serif;
+    color: white;
+    margin-top: 0px;
+    font-size: 20px;
+}
+p{
+    font-family: "Arial Bold", sans-serif;
+    color: black;
 }
 
  ul {
@@ -57,7 +68,7 @@ h2{
           margin: 0px;
           padding: 0px;
           overflow: hidden;
-          background-color:#8e9492;
+          background-color: #7eb7d9;
           position: relative;
           top: 0px;
           width: 100%;
@@ -69,6 +80,7 @@ h2{
         }
 
         li a {
+          font-family: "Arial Bold", sans-serif;
           display:block;
           color: black;
           text-align: center;
@@ -82,7 +94,7 @@ h2{
 
         .active {
           text-decoration: underline;
-          font-family: "Times New Roman";
+          font-family: "Arial Bold", sans-serif;          
           color: orangered;
         }
 
@@ -116,7 +128,7 @@ h2{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   width: 100%;
   margin-bottom: 20px;
-  background-color: #8e9492;
+  background-color: #7eb7d9;
   text-align: center;
   padding: 5px;
   position: relative;
@@ -130,7 +142,7 @@ h2{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   width: 100%;
   margin-bottom: 20px;
-  background-color: #8e9492;
+  background-color: #7eb7d9;
   text-align: center;
   padding: 5px;
   position: relative;
@@ -171,13 +183,9 @@ section.navArea{
     padding: 10px;
     position: relative;
     overflow: scroll;
-    background-color: #8e9492;
+    background-color: #7eb7d9;
     border-radius: 10px;
 }
-
-
-
-
 
 
 /*.menu1, .menu2, .menu3 {
