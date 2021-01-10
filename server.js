@@ -4,19 +4,20 @@ const needle = require('needle');
 var http = require('http');
 // import url
 var url = require('url');
-// import FileServer
+// import FileSystem
 var fs = require('fs');  
 
 // The code below sets the bearer token from the environment variables
-// export BEARER_TOKEN='AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh' 
 const token = process.env.BEARER_TOKEN || 'AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh'; 
-//const token = “AAAAAAAAAAAAAAAAAAAAANqbJQEAAAAAkmiGNIRt6NWuqggaEB0sPwQRwks%3DwypmckVAlIgYUupnkhOcvdgCIUVHJZYDZxJv1FP6vhkeb5Pbmh”; 
+// The code below sets the HTTP Server Default Port & Host
 const PORT = process.env.PORT || 8080;
 const MYSERVERHOST = process.env.MYSERVERHOST || '0.0.0.0';
 
+// Twitter and NewsCatcher EndPoint URLs
 const twitterEndpointURL = "https://api.twitter.com/2/tweets/search/recent"
 const newsEndpointURL = "https://newscatcher.p.rapidapi.com/v1/latest_headlines"
 
+// Function to Load a File and Serve Up as HTTP Response with specific Mime(Multipurpose Internet Mail Extensions) Type
 function serveResource(res, mimeType, path) {
     fs.readFile(__dirname + path, function(error, data) {  
         if (error) {  
@@ -33,6 +34,8 @@ function serveResource(res, mimeType, path) {
     });  
 }
 
+// Function to ilter Out Duplicate News Articles and returns Unique Results
+// First we add the data to a Map with News Article Title as the Key and NewsData as the Value and then return the Unique Values
 function uniqueResults(newsData) {
     
     // NewsData Map with Key as Title and NewsData Article as Value
@@ -43,10 +46,10 @@ function uniqueResults(newsData) {
     }
     
     console.log("Filtered newsData from records: " + newsData.length + " to unique records: " + uniqueNewsMap.size);
-    return Array.from(uniqueNewsMap.values());
-    
+    return Array.from(uniqueNewsMap.values()); 
 }
 
+// Async Function to Search Tweets based on specified Query String
 async function searchTweets(qs) {
     // parameters for getting tweets
     const params = {
@@ -56,10 +59,11 @@ async function searchTweets(qs) {
     }
 
     console.log("Searching Twitter using twitterEndpointURL=" + twitterEndpointURL + ", query="+ params["query"] + ", maxResults=" + params["max_results"]); 
+    //Sending a get request with the endpoint url, the parameters, and the authorization (Bearer Token)
     const twtrRes = await needle('get', twitterEndpointURL, params, { headers: {
         "authorization": `Bearer ${token}`
     }})
-
+    //If we get a response then return the response otherwise return null
     if(twtrRes.body) {
         return twtrRes.body;
     } else {
@@ -68,6 +72,7 @@ async function searchTweets(qs) {
     }
 }
 
+// Async Function to get News based on specified topic
 async function showNews(topic) {
     // parameters for getting news
     const params = {
@@ -77,12 +82,13 @@ async function showNews(topic) {
     }
 
     console.log("Searching News using newsEndpointURL=" + newsEndpointURL + ", topic="+ params["topic"]); 
+    //Sending a get request with the endpoint url, the parameters, and the authorization
     const newsRes = await needle('get', newsEndpointURL, params, { headers: {
         "x-rapidapi-key": "a00ad86ca6msh99ceae62c2a30acp19ce0fjsne1b976cab472",
         "x-rapidapi-host": "newscatcher.p.rapidapi.com",
         "useQueryString": true
     }})
-
+    //If we get a response then return the response otherwise return null
     if(newsRes.body) {
         return newsRes.body;
     } else {
@@ -91,6 +97,7 @@ async function showNews(topic) {
     }
 }
 
+// Async Function to get News based on country
 async function showLocalNews(country) {
     // parameters for getting news
     const params = {
@@ -100,6 +107,7 @@ async function showLocalNews(country) {
     }
 
     console.log("Searching News using newsEndpointURL=" + newsEndpointURL + ", country="+ params["country"]); 
+    //Sending a get request with the endpoint url, the parameters, and the authorization
     const newsRes = await needle('get', newsEndpointURL, params, { headers: {
         "x-rapidapi-key": "a00ad86ca6msh99ceae62c2a30acp19ce0fjsne1b976cab472",
         "x-rapidapi-host": "newscatcher.p.rapidapi.com",
@@ -114,9 +122,11 @@ async function showLocalNews(country) {
     }
 }
 
+//Defining a HTTP server and the function to receive HTTP requests and send HTTP responses
 var server= http.Server(function(req, res) {
     
     // Set CORS headers in order to not run into a CORS Error
+    // Cross-Origin Resource Sharing (CORS) is used by browsers — used to restrict HTTP and HTTPS requests made from scripts to resources in a different origin for security reasons, mainly to protect your user's data and prevent attacks that would compromise your app.
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Request-Method', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
@@ -129,17 +139,18 @@ var server= http.Server(function(req, res) {
     
     // Get the Requested Path and Server html files if requested
     // If Not html file Request then execute Backend Services and Render Html Response based on Command
+    // First we resolve the path
     var path = url.parse(req.url).pathname;  
     console.log("path = " + path);
     console.log("__dirname +path = " + __dirname + path);
     
+    // If there is no path, default it to index.html
     if(path == "/") {
         path = "/index.html";
         console.log("Redirecting path = / to path= " + path);
         console.log("__dirname +path = " + __dirname + path);
     }
-    
-    var homePg = new RegExp("home");
+    // Path variables for regular expression matching
     var indexPg = new RegExp("index.html");
     var pg1 = new RegExp("page1.html");
     var pg2 = new RegExp("page2.html");
@@ -162,13 +173,17 @@ var server= http.Server(function(req, res) {
     var countryImg = new RegExp("Country.jpeg");
     var bgImg = new RegExp("bgimg2.jpg");
     var execCmd = new RegExp("ExecCommand");
+    
+    // Using a switch statement and handling all path requests including serving HTTP/Images/JavaScript and handling News Search and Twitter Search requests 
     switch (true) {
         
+        // Case statement for handling png files
         case bgImg.test(path): {
             serveResource(res, 'image/png', path);
             break;  
         }    
-            
+        
+        // Case statement for handling jpeg files    
         case logoImg.test(path):
         case showTweetImg.test(path):
         case breakingNewsImg.test(path):
@@ -182,11 +197,7 @@ var server= http.Server(function(req, res) {
             break;  
         }    
             
-        case homePg.test(path): {
-            serveResource(res, 'text/html', "/index.html");
-            break;  
-        }
-            
+        // Case statement for handling html files      
         case indexPg.test(path):        
         case pg1.test(path):  
         case pg2.test(path):  
@@ -200,21 +211,25 @@ var server= http.Server(function(req, res) {
             break;  
         }
             
+        // Case statement for handling css files      
         case mystyles.test(path):  {
             serveResource(res, 'text/css', path);
             break;  
         }    
             
+        // Case statement for handling javascript files  
         case jQuery.test(path): {
             serveResource(res, 'text/javascript', path);
             break;  
         }        
         
+        // Case statement for handling Twitter and News Search Requests  
         case execCmd.test(path): {
              res.writeHead(200, { 'Content-Type': 'text/html' }); 
     
-            // Cmd Values = {'SearchTweets', 'ShowTopNews', 'ShowPersonalNews', 'ShowSportsNews', 'ShowEntertainmentNews', 'ShowPoliticsNews', 'ShowWorldNews', ShowInnovationNews', 'ShowLocalNews'}
+            // Cmd Values = {'SearchTweets', 'ShowTopNews', 'ShowSportsNews', 'ShowEntertainmentNews', 'ShowPoliticsNews', 'ShowWorldNews', ShowInnovationNews', 'ShowLocalNews'}
 
+            // Resolving the query command
             var queryObject = url.parse(req.url,true).query;
             var cmd = queryObject['command'];
             if(null == cmd || cmd.trim().length <=0) {
@@ -224,8 +239,10 @@ var server= http.Server(function(req, res) {
                 console.log("cmd = " + cmd);
             }
 
-
             if('SearchTweets' == cmd) {
+                
+                // Handle SearchTweets Command
+                
                 var queryExpr = '';
                 if(null != queryObject && null != queryObject['queryExpr']) {
                     queryExpr = queryObject['queryExpr'].trim();
@@ -233,6 +250,7 @@ var server= http.Server(function(req, res) {
 
                 console.log("Invoking searchTweets for queryExpr = " + queryExpr);
 
+                // Invoking an asynchronous function
                 (async() => {
                     const twtrRespBody = await searchTweets(queryExpr);
                     console.log("twtrRespBody = " + twtrRespBody.data);
@@ -240,24 +258,14 @@ var server= http.Server(function(req, res) {
                     //Write the data I want in the table
                     res.write('<table id="searchResultsTable">');
                     res.write('<tr>');
-                    //res.write('<th>Num</th>');
-                    //res.write('<th>ID</th>');
-                    //res.write('<th>Author ID</th>');
-                    //res.write('<th>CreatedDateTime</th>');
                     res.write('<th>Tweet Text</th>');
                     res.write('<th>Show</th>');
                     res.write('</tr>');
 
                     for(var i=0; i< tweetData.length; i++) {
                         res.write('<tr>');
-                        //res.write('<td>' + (i+1) + '</td>');
-                        //res.write('<td>' + tweetData[i]['id'] + '</td>');
-                        //res.write('<td>' + tweetData[i]['author_id'] + '</td>');
-                        //res.write('<td>' + tweetData[i]['created_at'] + '</td>');
                         res.write('<td>' + tweetData[i]['text'] + '</td>');
-                        // https://twitter.com/i/web/status/{tweetid}
                         var tweetUrl = "https://twitter.com/i/web/status/" + tweetData[i]['id'];
-                        //res.write('<td><a href="' + tweetUrl + '" target="_blank">' + '<i class="fa fa-external-link" aria-hidden="true"></i>' + '</a></td>');
                         res.write('<td><a href="' + tweetUrl + '" target="_blank">' + '<img src="/images/showTweet.png" alt="ShowTweet" width=20" height="20"></img>' + '</a></td>');
                         res.write('</tr>');
                     }
@@ -267,6 +275,8 @@ var server= http.Server(function(req, res) {
                 })()
             }  else if('ShowTopNews' == cmd) {
     
+                    // Handle ShowTopNews Command
+                
                     console.log("Invoking ShowTopNews");
                    
                     (async() => {
@@ -302,6 +312,8 @@ var server= http.Server(function(req, res) {
                     })()
                 
             } else if('ShowSportsNews' == cmd) {
+                
+                    // Handle ShowSportsNews Command
     
                     console.log("Invoking ShowSportsNews");
                    
@@ -338,6 +350,8 @@ var server= http.Server(function(req, res) {
             
             
              } else if('ShowEntertainmentNews' == cmd) {
+                 
+                    // Handle ShowEntertainmentNews Command
     
                     console.log("Invoking ShowEntertainmentNews");
                    
@@ -375,6 +389,8 @@ var server= http.Server(function(req, res) {
                     })()
                  
                } else if('ShowPoliticalNews' == cmd) {
+                   
+                    // Handle ShowPoliticalNews Command
     
                     console.log("Invoking ShowPoliticalNews");
                    
@@ -412,6 +428,8 @@ var server= http.Server(function(req, res) {
                     })()
    
                } else if('ShowWorldNews' == cmd) {
+                   
+                    // Handle ShowWorldNews Command
     
                     console.log("Invoking ShowWorldNews");
                    
@@ -448,6 +466,8 @@ var server= http.Server(function(req, res) {
                         res.end();
                     })()   
                } else if('ShowScienceNews' == cmd) {
+                   
+                    // Handle ShowScienceNews Command
     
                     console.log("Invoking ShowScienceNews");
                    
@@ -484,6 +504,9 @@ var server= http.Server(function(req, res) {
                         res.end();
                     })() 
                } else if('ShowLocalNews' == cmd) {
+                   
+                    // Handle ShowLocalNews Command (Country News)
+                    //
                     var queryCountry = 'Canada';
                     if(null != queryObject && null != queryObject['queryCountry'] && queryObject['queryCountry'].trim().length > 0) {
                         queryCountry = queryObject['queryCountry'].trim();
@@ -531,9 +554,11 @@ var server= http.Server(function(req, res) {
                     res.write("Unsupported cmd = " + cmd);
             }
         
-        break; 
+            break; 
         }
         default:  {
+            
+            // Handle Unexpected path requests by sending 404 Error 
             console.log("Unresolved path = " + path);
             res.writeHead(404);  
             res.write("Oops this page doesn't exist - 404");  
@@ -543,6 +568,8 @@ var server= http.Server(function(req, res) {
  
     }  
 });
-       
+      
+// Creating HTTP Server with variables PORT and MYSERVERHOST
+
 console.log(`Starting SearchTweets Server on host ${ MYSERVERHOST } port ${ PORT }`);
 server.listen(PORT, MYSERVERHOST)
